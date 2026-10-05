@@ -1,0 +1,113 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "deadline-math-reasoned",
+    "description": "Convert a published contest deadline to the reader's local time. Cases: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth computed with zoneinfo.",
+    "definition": "@kbench.task(\n    name=\"deadline-math-reasoned\",\n    # Literal y de 255 caracteres como m\u00c3\u00a1ximo: Kaggle rechaza la task si no.\n    description=(\n        \"Convert a published contest deadline to the reader's local time. Cases: day rollover, the weeks when \"\n        \"the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth \"\n        \"computed with zoneinfo.\"\n    ),\n)\ndef deadline_math(llm) -> float:\n    passed = 0\n    for case in CASE_SETS[SET]:\n        response = ask(llm, case)\n        answer = parse_answer(response)\n        kbench.assertions.assert_equal(\n            case.expected, answer,\n            expectation=f\"[{case.category}] {case.id}: {case.statement} -> {case.reader} = {case.expected}\",\n        )\n        passed += answer == case.expected\n    # Proporci\u00c3\u00b3n de aciertos: Kaggle a\u00c3\u00ban no muestra \u00c2\u00abaciertos de total\u00c2\u00bb (lee la tupla como valor \u00c2\u00b1 intervalo).\n    return passed / len(CASE_SETS[SET])\n"
+  },
+  "modelVersion": {
+    "slug": "google/gemini-2.5-pro"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_ERRORED",
+  "startTime": "2026-10-03T17:26:06.295789Z",
+  "endTime": "2026-10-03T17:29:26.735907Z",
+  "conversations": [
+    {
+      "id": "deadline-math-reasoned-b77e287e",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try1-573a47fc",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            }
+          ],
+          "id": "base-1-try1-573a47fc-req-1"
+        }
+      ],
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try2-47dbcdf7",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            }
+          ],
+          "id": "base-1-try2-47dbcdf7-req-1"
+        }
+      ],
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try3-063c540b",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            }
+          ],
+          "id": "base-1-try3-063c540b-req-1"
+        }
+      ],
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try4-3e75f2e1",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            }
+          ],
+          "id": "base-1-try4-3e75f2e1-req-1"
+        }
+      ],
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "booleanResult": false
+    }
+  ],
+  "pyRunId": "deadline-math-reasoned-Run #1",
+  "errorMessage": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/2005015767.py\", line 219, in deadline_math\n    response = ask(llm, case)\n               ^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/2005015767.py\", line 204, in ask\n    raise RuntimeError(f\"{case.id}: no answer after 4 attempts (API error, not a wrong answer): {last_error}\")\nRuntimeError: base-1: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.6554625) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}\n"
+}

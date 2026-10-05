@@ -1,0 +1,1112 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "deadline-math-reasoned",
+    "description": "Standard set, reasoning allowed. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.",
+    "definition": "@kbench.task(\n    name=\"deadline-math-reasoned\",\n    # Must be a literal of at most 255 characters, or Kaggle rejects the task.\n    description=\"Standard set, reasoning allowed. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.\",\n)\ndef deadline_math(llm) -> float:\n    passed = 0\n    for case in CASE_SETS[SET]:\n        response, output_tokens = ask(llm, case)\n        answer = parse_answer(response)\n        # No answer line and close to the limit: the reply was cut off. Scored as a failure, but flagged.\n        truncated = answer is None and output_tokens >= 0.95 * MAX_TOKENS\n        kbench.assertions.assert_equal(\n            case.expected, answer,\n            expectation=f\"[{case.category}] {case.id}: {case.statement} -> {case.reader} = {case.expected}\"\n            + (f\" (truncated at max_tokens={MAX_TOKENS})\" if truncated else \"\"),\n        )\n        passed += answer == case.expected\n    # Share of correct answers: Kaggle does not support \"passed of total\" yet (it reads a tuple as value \u00c2\u00b1 CI).\n    return passed / len(CASE_SETS[SET])\n"
+  },
+  "modelVersion": {
+    "slug": "anthropic/claude-haiku-4-5@20251001"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-10-05T07:29:06.125130Z",
+  "endTime": "2026-10-05T07:29:41.015931Z",
+  "conversations": [
+    {
+      "id": "deadline-math-reasoned-a2922b89",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try1-181fb73c",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 5:00 PM ET (Eastern Time) on September 30, 2026 to Madrid time (CEST - Central European Summer Time).\n\nIn late September, the Eastern Time zone is observing EDT (Eastern Daylight Time), which is UTC-4.\nMadrid observes CEST (Central European Summer Time) in September, which is UTC+2.\n\nThe time difference is: UTC+2 minus UTC-4 = 6 hours ahead.\n\nSo 5:00 PM ET (17:00) + 6 hours = 11:00 PM (23:00) the same day.\n\nANSWER: 2026-09-30 23:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 160,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "800000",
+            "totalBackendLatencyMs": "1616"
+          },
+          "id": "base-1-try1-181fb73c-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 160,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "800000",
+        "totalBackendLatencyMs": "1616"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-2-try1-fd7b5647",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Deadline: July 15, 2026, 12:00 UTC.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "Lima, Peru is in the Peru Time Zone (PET), which is UTC-5 (5 hours behind UTC).\n\nTo convert the deadline from UTC to Lima local time:\n- July 15, 2026, 12:00 UTC\n- Subtract 5 hours: 12:00 - 5:00 = 07:00\n\nSo the deadline in Lima would be 7:00 AM on July 15, 2026.\n\nANSWER: 2026-07-15 07:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 89,
+            "outputTokens": 120,
+            "inputTokensCostNanodollars": "89000",
+            "outputTokensCostNanodollars": "600000",
+            "totalBackendLatencyMs": "1263"
+          },
+          "id": "base-2-try1-fd7b5647-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 89,
+        "outputTokens": 120,
+        "inputTokensCostNanodollars": "89000",
+        "outputTokensCostNanodollars": "600000",
+        "totalBackendLatencyMs": "1263"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-3-try1-e09ee1d2",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Tokyo, Japan. A contest page says: \"Applications are due June 1, 2026 at 9:00 AM CEST.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert June 1, 2026 at 9:00 AM CEST to Japan Standard Time (JST).\n\nCEST (Central European Summer Time) is UTC+2.\nJST (Japan Standard Time) is UTC+9.\n\nThe difference is 7 hours ahead (JST is 7 hours ahead of CEST).\n\nSo June 1, 2026 at 9:00 AM CEST = June 1, 2026 at 4:00 PM JST.\n\nANSWER: 2026-06-01 16:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 93,
+            "outputTokens": 138,
+            "inputTokensCostNanodollars": "93000",
+            "outputTokensCostNanodollars": "690000",
+            "totalBackendLatencyMs": "1255"
+          },
+          "id": "base-3-try1-e09ee1d2-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 93,
+        "outputTokens": 138,
+        "inputTokensCostNanodollars": "93000",
+        "outputTokensCostNanodollars": "690000",
+        "totalBackendLatencyMs": "1255"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-1-try1-c48e2cf5",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The contest ends on October 11, 2026 at 11:59 PM PDT.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 11:59 PM PDT on October 11, 2026 to Madrid time (CEST/CET).\n\nPDT (Pacific Daylight Time) is UTC-7.\nIn October 2026, Madrid observes CEST (Central European Summer Time), which is UTC+2. However, let me check: daylight saving time in Europe ends on the last Sunday of October. October 11, 2026 is before that date, so Madrid is still on CEST (UTC+2).\n\nSo the conversion:\n- October 11, 2026 at 11:59 PM PDT = October 12, 2026 at 06:59 AM CEST\n\nAdding 9 hours (from UTC-7 to UTC+2) to 23:59 gives us 08:59 the next day.\n\nWait, let me recalculate: \n- 11:59 PM PDT + 9 hours = 8:59 AM next day = October 12, 2026 at 08:59 AM\n\nANSWER: 2026-10-12 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 93,
+            "outputTokens": 264,
+            "inputTokensCostNanodollars": "93000",
+            "outputTokensCostNanodollars": "1320000",
+            "totalBackendLatencyMs": "2491"
+          },
+          "id": "roll-1-try1-c48e2cf5-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 93,
+        "outputTokens": 264,
+        "inputTokensCostNanodollars": "93000",
+        "outputTokensCostNanodollars": "1320000",
+        "totalBackendLatencyMs": "2491"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-2-try1-b5093bdc",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 3, 2026 at 11:59 PM PST.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Deadline Conversion to Madrid Time\n\nPST (Pacific Standard Time) is UTC-8.\nMadrid uses CET (Central European Time) in winter, which is UTC+1.\n\nThe time difference is 9 hours (Madrid is 9 hours ahead of PST).\n\nMarch 3, 2026 at 11:59 PM PST converts to:\n- March 4, 2026 at 8:59 AM CET (add 9 hours)\n\nNote: By early March, Spain observes CET (not CEST/daylight saving time yet, which begins on March 29, 2026).\n\nANSWER: 2026-03-04 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 92,
+            "outputTokens": 161,
+            "inputTokensCostNanodollars": "92000",
+            "outputTokensCostNanodollars": "805000",
+            "totalBackendLatencyMs": "1639"
+          },
+          "id": "roll-2-try1-b5093bdc-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 92,
+        "outputTokens": 161,
+        "inputTokensCostNanodollars": "92000",
+        "outputTokensCostNanodollars": "805000",
+        "totalBackendLatencyMs": "1639"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-3-try1-1737c1c1",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"Deadline: 10:00 AM CET, February 2, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Converting CET to Los Angeles Time\n\nLos Angeles observes Pacific Standard Time (PST), which is UTC-8 in early February.\n\nCET (Central European Time) is UTC+1.\n\nThe time difference is: UTC+1 minus UTC-8 = 9 hours ahead.\n\nSo 10:00 AM CET on February 2, 2026 is 9 hours earlier in Los Angeles.\n\n10:00 AM - 9 hours = 1:00 AM on February 2, 2026.\n\nANSWER: 2026-02-02 01:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 92,
+            "outputTokens": 139,
+            "inputTokensCostNanodollars": "92000",
+            "outputTokensCostNanodollars": "695000",
+            "totalBackendLatencyMs": "1430"
+          },
+          "id": "roll-3-try1-1737c1c1-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 92,
+        "outputTokens": 139,
+        "inputTokensCostNanodollars": "92000",
+        "outputTokensCostNanodollars": "695000",
+        "totalBackendLatencyMs": "1430"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-4-try1-22ec9494",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submit by 8:00 AM JST on May 5, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 8:00 AM JST on May 5, 2026 to Lima, Peru local time.\n\nFirst, let me identify the time zones:\n- JST (Japan Standard Time) is UTC+9\n- Lima, Peru is in PET (Peru Time) which is UTC-5\n\nThe time difference between JST and PET is 9 - (-5) = 14 hours. JST is 14 hours ahead of PET.\n\nSo when it's 8:00 AM JST on May 5, 2026, I need to subtract 14 hours:\n8:00 AM - 14 hours = 6:00 PM the previous day (May 4, 2026)\n\nANSWER: 2026-05-04 18:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 90,
+            "outputTokens": 184,
+            "inputTokensCostNanodollars": "90000",
+            "outputTokensCostNanodollars": "920000",
+            "totalBackendLatencyMs": "1567"
+          },
+          "id": "roll-4-try1-22ec9494-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 90,
+        "outputTokens": 184,
+        "inputTokensCostNanodollars": "90000",
+        "outputTokensCostNanodollars": "920000",
+        "totalBackendLatencyMs": "1567"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-1-try1-e9bbda73",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close October 28, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Converting PT to Madrid Time\n\nPT (Pacific Time) is UTC-7 (during daylight saving time) or UTC-8 (during standard time).\n\nIn late October 2026, Pacific Time will be observing PDT (Pacific Daylight Time), which is UTC-7.\n\nMadrid, Spain observes CET (Central European Time), which is UTC+1 year-round (or CEST UTC+2 during summer, but in late October it will be CET UTC+1).\n\n**Time difference:** Madrid is 8 hours ahead of PT in late October.\n\n**Calculation:**\n- October 28, 2026 at 11:59 PM PT\n- Add 8 hours: October 29, 2026 at 7:59 AM CET\n\nANSWER: 2026-10-29 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 194,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "970000",
+            "totalBackendLatencyMs": "2029"
+          },
+          "id": "dst-oct-1-try1-e9bbda73-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 194,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "970000",
+        "totalBackendLatencyMs": "2029"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-2-try1-08693619",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The live session starts October 30, 2026, 9:00 AM ET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 9:00 AM ET (Eastern Time) on October 30, 2026 to Madrid local time (CET/CEST).\n\nIn late October, the US is still observing EDT (Eastern Daylight Time, UTC-4), while Spain observes CET (Central European Time, UTC+1).\n\nThe time difference is: UTC+1 minus UTC-4 = 5 hours ahead.\n\nSo 9:00 AM ET + 5 hours = 2:00 PM (14:00) Madrid time.\n\nANSWER: 2026-10-30 14:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 143,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "715000",
+            "totalBackendLatencyMs": "1440"
+          },
+          "id": "dst-oct-2-try1-08693619-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 143,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "715000",
+        "totalBackendLatencyMs": "1440"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-3-try1-77336513",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in New York, USA. A contest page says: \"Voting closes October 27, 2026 at 18:00 CET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 18:00 CET on October 27, 2026 to New York time.\n\nIn late October, New York observes Eastern Daylight Time (EDT), which is UTC-4.\nCET (Central European Time) is UTC+1.\n\nThe time difference is: UTC+1 minus UTC-4 = 5 hours ahead.\n\nSo 18:00 CET = 18:00 - 5 hours = 13:00 EDT on the same day.\n\nANSWER: 2026-10-27 13:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 92,
+            "outputTokens": 133,
+            "inputTokensCostNanodollars": "92000",
+            "outputTokensCostNanodollars": "665000",
+            "totalBackendLatencyMs": "1173"
+          },
+          "id": "dst-oct-3-try1-77336513-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 92,
+        "outputTokens": 133,
+        "inputTokensCostNanodollars": "92000",
+        "outputTokensCostNanodollars": "665000",
+        "totalBackendLatencyMs": "1173"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-4-try1-c0f5d792",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Final round closes November 2, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Time Zone Conversion\n\nPT (Pacific Time) is UTC-8 (or UTC-7 during daylight saving, but November is standard time).\nMadrid is in CET (Central European Time), which is UTC+1.\n\nThe deadline is November 2, 2026 at 11:59 PM PT.\n\nConverting:\n- 11:59 PM PT = 23:59 PT\n- PT is 9 hours behind CET\n- 23:59 + 9 hours = 32:59, which is 08:59 the next day\n\nSo the deadline in Madrid time is November 3, 2026 at 08:59 AM.\n\nANSWER: 2026-11-03 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 171,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "855000",
+            "totalBackendLatencyMs": "1649"
+          },
+          "id": "dst-oct-4-try1-c0f5d792-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 171,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "855000",
+        "totalBackendLatencyMs": "1649"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-1-try1-bddb0b7c",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 20, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Time Zone Conversion\n\nPT (Pacific Time) is UTC-8 in March 2026 (Pacific Standard Time, as daylight saving time begins later in March).\n\nMadrid is in CET (Central European Time), which is UTC+1 in March 2026.\n\nThe time difference is 9 hours (Madrid is ahead).\n\n**Conversion:**\n- 11:59 PM PT on March 20 = 23:59 PT on March 20\n- Add 9 hours: 23:59 + 9:00 = 32:59, which is 08:59 the next day\n- Result: March 21, 2026 at 08:59 CET\n\nANSWER: 2026-03-21 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 177,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "885000",
+            "totalBackendLatencyMs": "1843"
+          },
+          "id": "dst-mar-1-try1-bddb0b7c-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 177,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "885000",
+        "totalBackendLatencyMs": "1843"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-2-try1-81da734f",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"The webinar starts March 25, 2026, 12:00 PM CET.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 12:00 PM CET (Central European Time) on March 25, 2026 to Los Angeles time.\n\nLos Angeles is in the Pacific Time Zone. In late March, Los Angeles observes Pacific Daylight Time (PDT), which is UTC-7. CET (Central European Time) is UTC+1.\n\nThe time difference is: UTC+1 minus UTC-7 = 8 hours ahead.\n\nSo when it's 12:00 PM (noon) CET in Los Angeles, it's 8 hours earlier:\n12:00 PM - 8 hours = 4:00 AM\n\nANSWER: 2026-03-25 04:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 93,
+            "outputTokens": 162,
+            "inputTokensCostNanodollars": "93000",
+            "outputTokensCostNanodollars": "810000",
+            "totalBackendLatencyMs": "1556"
+          },
+          "id": "dst-mar-2-try1-81da734f-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 93,
+        "outputTokens": 162,
+        "inputTokensCostNanodollars": "93000",
+        "outputTokensCostNanodollars": "810000",
+        "totalBackendLatencyMs": "1556"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-1-try1-7cc83fae",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 12:00 AM ET on October 12, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Calculating the deadline in Madrid time\n\nLet me work through this step by step:\n\n**Given information:**\n- Deadline: 12:00 AM ET on October 12, 2026\n- Your location: Madrid, Spain\n\n**Time zone conversion:**\n- 12:00 AM ET = midnight at the start of October 12\n- ET (Eastern Time) in October 2026 will be EDT (Eastern Daylight Time), which is UTC-4\n- Madrid is in CEST (Central European Summer Time) in October, which is UTC+2\n- Time difference: UTC+2 minus UTC-4 = 6 hours ahead\n\n**Calculation:**\n- 12:00 AM ET + 6 hours = 6:00 AM CEST\n\nANSWER: 2026-10-12 06:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 90,
+            "outputTokens": 192,
+            "inputTokensCostNanodollars": "90000",
+            "outputTokensCostNanodollars": "960000",
+            "totalBackendLatencyMs": "1771"
+          },
+          "id": "sem-1-try1-7cc83fae-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 90,
+        "outputTokens": 192,
+        "inputTokensCostNanodollars": "90000",
+        "outputTokensCostNanodollars": "960000",
+        "totalBackendLatencyMs": "1771"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-2-try1-f4024ce1",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Papers are due October 9, 2026 (23:59 AoE).\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "# Calculating the Madrid Deadline\n\nAoE (Anywhere on Earth) is based on UTC-12, which is the furthest behind timezone on Earth.\n\n**October 9, 2026 at 23:59 AoE** = **October 10, 2026 at 11:59 UTC** (add 12 hours)\n\nMadrid is in Central European Summer Time (CEST, UTC+2) in October 2026.\n\n**October 10, 2026 at 11:59 UTC** = **October 10, 2026 at 13:59 CEST** (add 2 hours)\n\nANSWER: 2026-10-10 13:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 92,
+            "outputTokens": 165,
+            "inputTokensCostNanodollars": "92000",
+            "outputTokensCostNanodollars": "825000",
+            "totalBackendLatencyMs": "1647"
+          },
+          "id": "sem-2-try1-f4024ce1-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 92,
+        "outputTokens": 165,
+        "inputTokensCostNanodollars": "92000",
+        "outputTokensCostNanodollars": "825000",
+        "totalBackendLatencyMs": "1647"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-3-try1-d7caec01",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Registration closes 12:00 PM PT, August 14, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 12:00 PM PT (Pacific Time) on August 14, 2026 to Madrid time (Central European Summer Time).\n\nIn August, PT is Pacific Daylight Time (PDT), which is UTC-7.\nMadrid in August observes Central European Summer Time (CEST), which is UTC+2.\n\nThe time difference is: UTC+2 minus UTC-7 = 9 hours ahead.\n\nSo 12:00 PM (noon) PT on August 14 = 12:00 + 9 hours = 21:00 (9:00 PM) on August 14 in Madrid.\n\nANSWER: 2026-08-14 21:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 89,
+            "outputTokens": 164,
+            "inputTokensCostNanodollars": "89000",
+            "outputTokensCostNanodollars": "820000",
+            "totalBackendLatencyMs": "1576"
+          },
+          "id": "sem-3-try1-d7caec01-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 89,
+        "outputTokens": 164,
+        "inputTokensCostNanodollars": "89000",
+        "outputTokensCostNanodollars": "820000",
+        "totalBackendLatencyMs": "1576"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-1-try1-16d54f34",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 11:59 PM IST, November 10, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 11:59 PM IST (Indian Standard Time) on November 10, 2026 to Madrid's local time (CET/CEST).\n\nIST is UTC+5:30.\nMadrid in November uses CET (Central European Time), which is UTC+1.\n\nThe time difference is: 5:30 - 1:00 = 4 hours and 30 minutes ahead.\n\nSo 11:59 PM IST on November 10 equals:\n11:59 PM - 4 hours 30 minutes = 7:29 PM on November 10 in Madrid.\n\nANSWER: 2026-11-10 19:29"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 161,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "805000",
+            "totalBackendLatencyMs": "1448"
+          },
+          "id": "off-1-try1-16d54f34-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 161,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "805000",
+        "totalBackendLatencyMs": "1448"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-2-try1-6813cd15",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submissions close at 5:00 PM Nepal time on April 2, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 5:00 PM Nepal time on April 2, 2026 to Lima, Peru time.\n\n**Time zones:**\n- Nepal Standard Time (NST): UTC+5:45\n- Peru Standard Time (PET): UTC-5\n\n**Time difference:**\nFrom Nepal to Peru: UTC+5:45 to UTC-5 is a difference of 10 hours 45 minutes behind.\nSo when it's 5:00 PM in Nepal, it's 5:00 PM minus 10 hours 45 minutes in Peru.\n\n**Calculation:**\n5:00 PM (17:00) on April 2, 2026 in Nepal\nMinus 10 hours 45 minutes = 6:15 AM on April 2, 2026 in Lima\n\nANSWER: 2026-04-02 06:15"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 92,
+            "outputTokens": 202,
+            "inputTokensCostNanodollars": "92000",
+            "outputTokensCostNanodollars": "1010000",
+            "totalBackendLatencyMs": "1770"
+          },
+          "id": "off-2-try1-6813cd15-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 92,
+        "outputTokens": 202,
+        "inputTokensCostNanodollars": "92000",
+        "outputTokensCostNanodollars": "1010000",
+        "totalBackendLatencyMs": "1770"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-3-try1-96516303",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Applications close 10:00 AM Adelaide time, October 6, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 10:00 AM Adelaide time on October 6, 2026 to Madrid time.\n\nAdelaide is in Australian Central Standard Time (ACST), which is UTC+9:30.\nMadrid is in Central European Time (CET), which is UTC+1 in October (actually CEST - Central European Summer Time is UTC+2, but October 6 is after summer time ends on the last Sunday of October... wait, let me reconsider. In 2026, the last Sunday of October is October 25. So on October 6, Spain is still on CEST, which is UTC+2).\n\nTime difference: Adelaide (UTC+9:30) to Madrid (UTC+2) = 9:30 - 2 = 7.5 hours ahead.\n\nSo when it's 10:00 AM in Adelaide, it's 10:00 - 7:30 = 2:30 AM in Madrid on the same day.\n\nANSWER: 2026-10-06 02:30"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 90,
+            "outputTokens": 237,
+            "inputTokensCostNanodollars": "90000",
+            "outputTokensCostNanodollars": "1185000",
+            "totalBackendLatencyMs": "2199"
+          },
+          "id": "off-3-try1-96516303-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 90,
+        "outputTokens": 237,
+        "inputTokensCostNanodollars": "90000",
+        "outputTokensCostNanodollars": "1185000",
+        "totalBackendLatencyMs": "2199"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-4-try1-68fd75b4",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close 6:00 PM Sydney time on October 3, 2026.\"\nWhen is that deadline in my local time? You may reason briefly, but end your reply with one final line exactly in this format: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "I need to convert 6:00 PM Sydney time on October 3, 2026 to Madrid time.\n\n**Time zone information:**\n- Sydney is in AEDT (Australian Eastern Daylight Time) in October, which is UTC+11\n- Madrid is in CEST (Central European Summer Time) in October, which is UTC+2\n\n**Calculation:**\n- 6:00 PM (18:00) Sydney time on October 3, 2026 = 18:00 UTC+11\n- Convert to UTC: 18:00 - 11 hours = 07:00 UTC on October 3\n- Convert to Madrid time (UTC+2): 07:00 + 2 hours = 09:00 on October 3\n\nANSWER: 2026-10-03 09:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-haiku-4-5@20251001"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 91,
+            "outputTokens": 192,
+            "inputTokensCostNanodollars": "91000",
+            "outputTokensCostNanodollars": "960000",
+            "totalBackendLatencyMs": "1558"
+          },
+          "id": "off-4-try1-68fd75b4-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 91,
+        "outputTokens": 192,
+        "inputTokensCostNanodollars": "91000",
+        "outputTokensCostNanodollars": "960000",
+        "totalBackendLatencyMs": "1558"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "numericResult": {
+        "value": 0.85
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "expectation": "[base] base-1: Submissions close September 30, 2026 at 5:00 PM ET. -> Madrid, Spain = 2026-09-30 23:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-2: Deadline: July 15, 2026, 12:00 UTC. -> Lima, Peru = 2026-07-15 07:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-3: Applications are due June 1, 2026 at 9:00 AM CEST. -> Tokyo, Japan = 2026-06-01 16:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-1: The contest ends on October 11, 2026 at 11:59 PM PDT. -> Madrid, Spain = 2026-10-12 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-2: Entries close March 3, 2026 at 11:59 PM PST. -> Madrid, Spain = 2026-03-04 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-3: Deadline: 10:00 AM CET, February 2, 2026. -> Los Angeles, USA = 2026-02-02 01:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-4: Submit by 8:00 AM JST on May 5, 2026. -> Lima, Peru = 2026-05-04 18:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-1: Submissions close October 28, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-10-29 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-2: The live session starts October 30, 2026, 9:00 AM ET. -> Madrid, Spain = 2026-10-30 14:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-3: Voting closes October 27, 2026 at 18:00 CET. -> New York, USA = 2026-10-27 13:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-4: Final round closes November 2, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-11-03 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-1: Entries close March 20, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-03-21 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-2: The webinar starts March 25, 2026, 12:00 PM CET. -> Los Angeles, USA = 2026-03-25 04:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-1: Deadline: 12:00 AM ET on October 12, 2026. -> Madrid, Spain = 2026-10-12 06:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-2: Papers are due October 9, 2026 (23:59 AoE). -> Madrid, Spain = 2026-10-10 13:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-3: Registration closes 12:00 PM PT, August 14, 2026. -> Madrid, Spain = 2026-08-14 21:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-1: Deadline: 11:59 PM IST, November 10, 2026. -> Madrid, Spain = 2026-11-10 19:29",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-2: Submissions close at 5:00 PM Nepal time on April 2, 2026. -> Lima, Peru = 2026-04-02 06:15",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-3: Applications close 10:00 AM Adelaide time, October 6, 2026. -> Madrid, Spain = 2026-10-06 01:30",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-4: Entries close 6:00 PM Sydney time on October 3, 2026. -> Madrid, Spain = 2026-10-03 10:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-reasoned-a2922b89"
+        }
+      ]
+    }
+  ],
+  "pyRunId": "deadline-math-reasoned-Run #1"
+}

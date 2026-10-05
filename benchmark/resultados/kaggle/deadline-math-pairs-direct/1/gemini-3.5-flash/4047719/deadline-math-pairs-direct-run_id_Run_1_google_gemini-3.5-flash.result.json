@@ -1,0 +1,39 @@
+{
+  "task_name": "deadline-math-pairs-direct",
+  "trial_name": "deadline-math-pairs-direct-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "google/gemini-3.5-flash"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 5226,
+    "n_output_tokens": 63511,
+    "cost_usd": 0.579438
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.0
+    }
+  },
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "pd-aut-03-T: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.07386) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/25498376.py\", line 318, in deadline_math\n    response, output_tokens = ask(llm, case)\n                              ^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/25498376.py\", line 307, in ask\n    raise RuntimeError(f\"{case.id}: no answer after 4 attempts (API error, not a wrong answer): {last_error}\")\nRuntimeError: pd-aut-03-T: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.07386) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}\n",
+    "occurred_at": "2026-10-04T19:51:52.066152Z"
+  },
+  "started_at": "2026-10-04T19:43:03.891439Z",
+  "finished_at": "2026-10-04T19:51:52.066152Z"
+}

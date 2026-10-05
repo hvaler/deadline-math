@@ -1,0 +1,1112 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "deadline-math-direct",
+    "description": "Standard set, answer-only mode. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.",
+    "definition": "@kbench.task(\n    name=\"deadline-math-direct\",\n    # Must be a literal of at most 255 characters, or Kaggle rejects the task.\n    description=\"Standard set, answer-only mode. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.\",\n)\ndef deadline_math(llm) -> float:\n    passed = 0\n    for case in CASE_SETS[SET]:\n        response, output_tokens = ask(llm, case)\n        answer = parse_answer(response)\n        # No answer line and close to the limit: the reply was cut off. Scored as a failure, but flagged.\n        truncated = answer is None and output_tokens >= 0.95 * MAX_TOKENS\n        kbench.assertions.assert_equal(\n            case.expected, answer,\n            expectation=f\"[{case.category}] {case.id}: {case.statement} -> {case.reader} = {case.expected}\"\n            + (f\" (truncated at max_tokens={MAX_TOKENS})\" if truncated else \"\"),\n        )\n        passed += answer == case.expected\n    # Share of correct answers: Kaggle does not support \"passed of total\" yet (it reads a tuple as value \u00c2\u00b1 CI).\n    return passed / len(CASE_SETS[SET])\n"
+  },
+  "modelVersion": {
+    "slug": "openai/gpt-oss-20b"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-10-04T07:12:05.880977Z",
+  "endTime": "2026-10-04T07:13:02.318700Z",
+  "conversations": [
+    {
+      "id": "deadline-math-direct-65bf2b37",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try1-b7ab7804",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-09-30 23:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 220,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "55000",
+            "totalBackendLatencyMs": "1337"
+          },
+          "id": "base-1-try1-b7ab7804-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 220,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "55000",
+        "totalBackendLatencyMs": "1337"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-2-try1-5ad248a0",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Deadline: July 15, 2026, 12:00 UTC.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-07-15 07:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 132,
+            "outputTokens": 147,
+            "inputTokensCostNanodollars": "9240",
+            "outputTokensCostNanodollars": "36750",
+            "totalBackendLatencyMs": "659"
+          },
+          "id": "base-2-try1-5ad248a0-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 132,
+        "outputTokens": 147,
+        "inputTokensCostNanodollars": "9240",
+        "outputTokensCostNanodollars": "36750",
+        "totalBackendLatencyMs": "659"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-3-try1-80cac98a",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Tokyo, Japan. A contest page says: \"Applications are due June 1, 2026 at 9:00 AM CEST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-06-01 16:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 135,
+            "outputTokens": 236,
+            "inputTokensCostNanodollars": "9450",
+            "outputTokensCostNanodollars": "59000",
+            "totalBackendLatencyMs": "766"
+          },
+          "id": "base-3-try1-80cac98a-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 135,
+        "outputTokens": 236,
+        "inputTokensCostNanodollars": "9450",
+        "outputTokensCostNanodollars": "59000",
+        "totalBackendLatencyMs": "766"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-1-try1-d14662c1",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The contest ends on October 11, 2026 at 11:59 PM PDT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-12 04:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 135,
+            "outputTokens": 673,
+            "inputTokensCostNanodollars": "9450",
+            "outputTokensCostNanodollars": "168250",
+            "totalBackendLatencyMs": "2445"
+          },
+          "id": "roll-1-try1-d14662c1-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 135,
+        "outputTokens": 673,
+        "inputTokensCostNanodollars": "9450",
+        "outputTokensCostNanodollars": "168250",
+        "totalBackendLatencyMs": "2445"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-2-try1-bdc7ba01",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 3, 2026 at 11:59 PM PST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-04 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 593,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "148250",
+            "totalBackendLatencyMs": "1621"
+          },
+          "id": "roll-2-try1-bdc7ba01-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 593,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "148250",
+        "totalBackendLatencyMs": "1621"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-3-try1-e7319470",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"Deadline: 10:00 AM CET, February 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-02-02 01:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 415,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "103750",
+            "totalBackendLatencyMs": "1518"
+          },
+          "id": "roll-3-try1-e7319470-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 415,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "103750",
+        "totalBackendLatencyMs": "1518"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-4-try1-2b8f88f4",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submit by 8:00 AM JST on May 5, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-05-04 18:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 479,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "119750",
+            "totalBackendLatencyMs": "1713"
+          },
+          "id": "roll-4-try1-2b8f88f4-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 479,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "119750",
+        "totalBackendLatencyMs": "1713"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-1-try1-b6956d9a",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close October 28, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-29 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 3235,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "808750",
+            "totalBackendLatencyMs": "8443"
+          },
+          "id": "dst-oct-1-try1-b6956d9a-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 3235,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "808750",
+        "totalBackendLatencyMs": "8443"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-2-try1-fbda8c66",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The live session starts October 30, 2026, 9:00 AM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-30 14:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 135,
+            "outputTokens": 1395,
+            "inputTokensCostNanodollars": "9450",
+            "outputTokensCostNanodollars": "348750",
+            "totalBackendLatencyMs": "4842"
+          },
+          "id": "dst-oct-2-try1-fbda8c66-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 135,
+        "outputTokens": 1395,
+        "inputTokensCostNanodollars": "9450",
+        "outputTokensCostNanodollars": "348750",
+        "totalBackendLatencyMs": "4842"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-3-try1-d4b04c94",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in New York, USA. A contest page says: \"Voting closes October 27, 2026 at 18:00 CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-27 13:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 1615,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "403750",
+            "totalBackendLatencyMs": "4077"
+          },
+          "id": "dst-oct-3-try1-d4b04c94-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 1615,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "403750",
+        "totalBackendLatencyMs": "4077"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-4-try1-8aab90f2",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Final round closes November 2, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-11-03 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 841,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "210250",
+            "totalBackendLatencyMs": "2189"
+          },
+          "id": "dst-oct-4-try1-8aab90f2-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 841,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "210250",
+        "totalBackendLatencyMs": "2189"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-1-try1-449c41a4",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 20, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-21 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 504,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "126000",
+            "totalBackendLatencyMs": "1603"
+          },
+          "id": "dst-mar-1-try1-449c41a4-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 504,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "126000",
+        "totalBackendLatencyMs": "1603"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-2-try1-70ee8ed4",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"The webinar starts March 25, 2026, 12:00 PM CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-25 04:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 135,
+            "outputTokens": 1686,
+            "inputTokensCostNanodollars": "9450",
+            "outputTokensCostNanodollars": "421500",
+            "totalBackendLatencyMs": "4363"
+          },
+          "id": "dst-mar-2-try1-70ee8ed4-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 135,
+        "outputTokens": 1686,
+        "inputTokensCostNanodollars": "9450",
+        "outputTokensCostNanodollars": "421500",
+        "totalBackendLatencyMs": "4363"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-1-try1-71097e78",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 12:00 AM ET on October 12, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-12 06:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 538,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "134500",
+            "totalBackendLatencyMs": "1402"
+          },
+          "id": "sem-1-try1-71097e78-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 538,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "134500",
+        "totalBackendLatencyMs": "1402"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-2-try1-97d8c325",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Papers are due October 9, 2026 (23:59 AoE).\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-10 13:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 135,
+            "outputTokens": 1364,
+            "inputTokensCostNanodollars": "9450",
+            "outputTokensCostNanodollars": "341000",
+            "totalBackendLatencyMs": "4803"
+          },
+          "id": "sem-2-try1-97d8c325-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 135,
+        "outputTokens": 1364,
+        "inputTokensCostNanodollars": "9450",
+        "outputTokensCostNanodollars": "341000",
+        "totalBackendLatencyMs": "4803"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-3-try1-5c2a8370",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Registration closes 12:00 PM PT, August 14, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-08-14 21:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 208,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "52000",
+            "totalBackendLatencyMs": "656"
+          },
+          "id": "sem-3-try1-5c2a8370-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 208,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "52000",
+        "totalBackendLatencyMs": "656"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-1-try1-c2198adc",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 11:59 PM IST, November 10, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-11-10 19:29"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 133,
+            "outputTokens": 1100,
+            "inputTokensCostNanodollars": "9310",
+            "outputTokensCostNanodollars": "275000",
+            "totalBackendLatencyMs": "3392"
+          },
+          "id": "off-1-try1-c2198adc-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 133,
+        "outputTokens": 1100,
+        "inputTokensCostNanodollars": "9310",
+        "outputTokensCostNanodollars": "275000",
+        "totalBackendLatencyMs": "3392"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-2-try1-33b8b1d0",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submissions close at 5:00 PM Nepal time on April 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-04-02 06:15"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 136,
+            "outputTokens": 563,
+            "inputTokensCostNanodollars": "9520",
+            "outputTokensCostNanodollars": "140750",
+            "totalBackendLatencyMs": "1472"
+          },
+          "id": "off-2-try1-33b8b1d0-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 136,
+        "outputTokens": 563,
+        "inputTokensCostNanodollars": "9520",
+        "outputTokensCostNanodollars": "140750",
+        "totalBackendLatencyMs": "1472"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-3-try1-d084dc0d",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Applications close 10:00 AM Adelaide time, October 6, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-06 01:30"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 1646,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "411500",
+            "totalBackendLatencyMs": "4061"
+          },
+          "id": "off-3-try1-d084dc0d-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 1646,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "411500",
+        "totalBackendLatencyMs": "4061"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-4-try1-61e1608a",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close 6:00 PM Sydney time on October 3, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-03 10:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-oss-20b"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 134,
+            "outputTokens": 978,
+            "inputTokensCostNanodollars": "9380",
+            "outputTokensCostNanodollars": "244500",
+            "totalBackendLatencyMs": "2561"
+          },
+          "id": "off-4-try1-61e1608a-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 134,
+        "outputTokens": 978,
+        "inputTokensCostNanodollars": "9380",
+        "outputTokensCostNanodollars": "244500",
+        "totalBackendLatencyMs": "2561"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "numericResult": {
+        "value": 0.9
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "expectation": "[base] base-1: Submissions close September 30, 2026 at 5:00 PM ET. -> Madrid, Spain = 2026-09-30 23:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-2: Deadline: July 15, 2026, 12:00 UTC. -> Lima, Peru = 2026-07-15 07:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-3: Applications are due June 1, 2026 at 9:00 AM CEST. -> Tokyo, Japan = 2026-06-01 16:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-1: The contest ends on October 11, 2026 at 11:59 PM PDT. -> Madrid, Spain = 2026-10-12 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-2: Entries close March 3, 2026 at 11:59 PM PST. -> Madrid, Spain = 2026-03-04 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-3: Deadline: 10:00 AM CET, February 2, 2026. -> Los Angeles, USA = 2026-02-02 01:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-4: Submit by 8:00 AM JST on May 5, 2026. -> Lima, Peru = 2026-05-04 18:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-1: Submissions close October 28, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-10-29 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-2: The live session starts October 30, 2026, 9:00 AM ET. -> Madrid, Spain = 2026-10-30 14:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-3: Voting closes October 27, 2026 at 18:00 CET. -> New York, USA = 2026-10-27 13:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-4: Final round closes November 2, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-11-03 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-1: Entries close March 20, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-03-21 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-2: The webinar starts March 25, 2026, 12:00 PM CET. -> Los Angeles, USA = 2026-03-25 04:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-1: Deadline: 12:00 AM ET on October 12, 2026. -> Madrid, Spain = 2026-10-12 06:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-2: Papers are due October 9, 2026 (23:59 AoE). -> Madrid, Spain = 2026-10-10 13:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-3: Registration closes 12:00 PM PT, August 14, 2026. -> Madrid, Spain = 2026-08-14 21:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-1: Deadline: 11:59 PM IST, November 10, 2026. -> Madrid, Spain = 2026-11-10 19:29",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-2: Submissions close at 5:00 PM Nepal time on April 2, 2026. -> Lima, Peru = 2026-04-02 06:15",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-3: Applications close 10:00 AM Adelaide time, October 6, 2026. -> Madrid, Spain = 2026-10-06 01:30",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-4: Entries close 6:00 PM Sydney time on October 3, 2026. -> Madrid, Spain = 2026-10-03 10:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-65bf2b37"
+        }
+      ]
+    }
+  ],
+  "pyRunId": "deadline-math-direct-Run #1"
+}

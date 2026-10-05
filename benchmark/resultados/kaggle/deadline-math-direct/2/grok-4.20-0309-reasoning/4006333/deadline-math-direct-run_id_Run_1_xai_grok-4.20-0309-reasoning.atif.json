@@ -1,0 +1,1100 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "deadline-math-direct-Run #1",
+  "trajectory_id": "deadline-math-direct-Run #1",
+  "agent": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_name": "xai/grok-4.20-0309-reasoning"
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "source": "system",
+      "message": "[placeholder] No conversation recorded.",
+      "timestamp": "2026-10-03T16:15:06.945981Z"
+    },
+    {
+      "step_id": 2,
+      "source": "system",
+      "message": "[delegated] Other trajectories from this run: base-1, base-2, base-3, roll-1, roll-2, roll-3, roll-4, dst-oct-1, dst-oct-2, dst-oct-3, dst-oct-4, dst-mar-1, dst-mar-2, sem-1, sem-2, sem-3, off-1, off-2, off-3, off-4.",
+      "observation": {
+        "results": [
+          {
+            "subagent_trajectory_ref": [
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::base-1-32ee6480",
+                "extra": {
+                  "kbench_chat": "base-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::base-2-2f00bdea",
+                "extra": {
+                  "kbench_chat": "base-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::base-3-c51b0d48",
+                "extra": {
+                  "kbench_chat": "base-3"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::roll-1-f6e74b00",
+                "extra": {
+                  "kbench_chat": "roll-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::roll-2-b2b83fd5",
+                "extra": {
+                  "kbench_chat": "roll-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::roll-3-543814c4",
+                "extra": {
+                  "kbench_chat": "roll-3"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::roll-4-70229d73",
+                "extra": {
+                  "kbench_chat": "roll-4"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-oct-1-6cb5f01a",
+                "extra": {
+                  "kbench_chat": "dst-oct-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-oct-2-3412af14",
+                "extra": {
+                  "kbench_chat": "dst-oct-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-oct-3-8c03761b",
+                "extra": {
+                  "kbench_chat": "dst-oct-3"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-oct-4-3f292505",
+                "extra": {
+                  "kbench_chat": "dst-oct-4"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-mar-1-b414f13a",
+                "extra": {
+                  "kbench_chat": "dst-mar-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::dst-mar-2-403aa049",
+                "extra": {
+                  "kbench_chat": "dst-mar-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::sem-1-bbd1a3c7",
+                "extra": {
+                  "kbench_chat": "sem-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::sem-2-bb8a8dcb",
+                "extra": {
+                  "kbench_chat": "sem-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::sem-3-1d318b1c",
+                "extra": {
+                  "kbench_chat": "sem-3"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::off-1-17bf2650",
+                "extra": {
+                  "kbench_chat": "off-1"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::off-2-7d627768",
+                "extra": {
+                  "kbench_chat": "off-2"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::off-3-f7beeb6c",
+                "extra": {
+                  "kbench_chat": "off-3"
+                }
+              },
+              {
+                "trajectory_id": "deadline-math-direct-Run #1::off-4-e0fbddc1",
+                "extra": {
+                  "kbench_chat": "off-4"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "notes": "Converted from kbench run.json for task 'deadline-math-direct'. No model turn was recorded, so total_steps is 0 and the first step below is a placeholder.",
+  "final_metrics": {
+    "total_prompt_tokens": 7896,
+    "total_completion_tokens": 20950,
+    "total_cost_usd": 0.055525,
+    "total_steps": 0,
+    "extra": {
+      "kbench_result": {
+        "score": 20.0,
+        "score_confidence_interval": 20.0
+      }
+    }
+  },
+  "extra": {
+    "kbench": {
+      "task_version": {
+        "version_number": 1,
+        "name": "deadline-math-direct",
+        "description": "Convert a published contest deadline to the reader's local time. Cases: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth computed with zoneinfo.",
+        "definition": "@kbench.task(\n    name=\"deadline-math-direct\",\n    # Literal y de 255 caracteres como m\u00c3\u00a1ximo: Kaggle rechaza la task si no.\n    description=(\n        \"Convert a published contest deadline to the reader's local time. Cases: day rollover, the weeks when \"\n        \"the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth \"\n        \"computed with zoneinfo.\"\n    ),\n)\ndef deadline_math(llm) -> tuple[int, int]:\n    passed = 0\n    for case in CASES:\n        with kbench.chats.new(case.id):\n            response = ask(llm, PROMPTS[MODE].format(reader=case.reader, statement=case.statement))\n        answer = parse_answer(response)\n        kbench.assertions.assert_equal(\n            case.expected, answer,\n            expectation=f\"[{case.category}] {case.id}: {case.statement} -> {case.reader} = {case.expected}\",\n        )\n        passed += answer == case.expected\n    return passed, len(CASES)\n"
+      },
+      "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+      "end_time": "2026-10-03T16:16:54.273946Z",
+      "assertions": [
+        {
+          "expectation": "[base] base-1: Submissions close September 30, 2026 at 5:00 PM ET. -> Madrid, Spain = 2026-09-30 23:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[base] base-2: Deadline: July 15, 2026, 12:00 UTC. -> Lima, Peru = 2026-07-15 07:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[base] base-3: Applications are due June 1, 2026 at 9:00 AM CEST. -> Tokyo, Japan = 2026-06-01 16:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[day-rollover] roll-1: The contest ends on October 11, 2026 at 11:59 PM PDT. -> Madrid, Spain = 2026-10-12 08:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[day-rollover] roll-2: Entries close March 3, 2026 at 11:59 PM PST. -> Madrid, Spain = 2026-03-04 08:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[day-rollover] roll-3: Deadline: 10:00 AM CET, February 2, 2026. -> Los Angeles, USA = 2026-02-02 01:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[day-rollover] roll-4: Submit by 8:00 AM JST on May 5, 2026. -> Lima, Peru = 2026-05-04 18:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-autumn] dst-oct-1: Submissions close October 28, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-10-29 07:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-autumn] dst-oct-2: The live session starts October 30, 2026, 9:00 AM ET. -> Madrid, Spain = 2026-10-30 14:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-autumn] dst-oct-3: Voting closes October 27, 2026 at 18:00 CET. -> New York, USA = 2026-10-27 13:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-autumn] dst-oct-4: Final round closes November 2, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-11-03 08:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-spring] dst-mar-1: Entries close March 20, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-03-21 07:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[dst-gap-spring] dst-mar-2: The webinar starts March 25, 2026, 12:00 PM CET. -> Los Angeles, USA = 2026-03-25 04:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[wording] sem-1: Deadline: 12:00 AM ET on October 12, 2026. -> Madrid, Spain = 2026-10-12 06:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[wording] sem-2: Papers are due October 9, 2026 (23:59 AoE). -> Madrid, Spain = 2026-10-10 13:59",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[wording] sem-3: Registration closes 12:00 PM PT, August 14, 2026. -> Madrid, Spain = 2026-08-14 21:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[offsets] off-1: Deadline: 11:59 PM IST, November 10, 2026. -> Madrid, Spain = 2026-11-10 19:29",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[offsets] off-2: Submissions close at 5:00 PM Nepal time on April 2, 2026. -> Lima, Peru = 2026-04-02 06:15",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[offsets] off-3: Applications close 10:00 AM Adelaide time, October 6, 2026. -> Madrid, Spain = 2026-10-06 01:30",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        },
+        {
+          "expectation": "[offsets] off-4: Entries close 6:00 PM Sydney time on October 3, 2026. -> Madrid, Spain = 2026-10-03 10:00",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+          "line_number": 163,
+          "definition": "kbench.assertions.assert_equal(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "deadline-math-direct-b574edc4"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "subagent_trajectories": [
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::base-1-32ee6480",
+      "agent": {
+        "name": "base-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-09-30 23:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 548,
+            "cost_usd": 0.00152775,
+            "extra": {
+              "total_backend_latency_ms": 1846
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::base-2-2f00bdea",
+      "agent": {
+        "name": "base-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Lima, Peru. A contest page says: \"Deadline: July 15, 2026, 12:00 UTC.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-07-15 07:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 393,
+            "completion_tokens": 420,
+            "cost_usd": 0.00120525,
+            "extra": {
+              "total_backend_latency_ms": 1239
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::base-3-c51b0d48",
+      "agent": {
+        "name": "base-3",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Tokyo, Japan. A contest page says: \"Applications are due June 1, 2026 at 9:00 AM CEST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-06-01 16:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 569,
+            "cost_usd": 0.00158025,
+            "extra": {
+              "total_backend_latency_ms": 1644
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::roll-1-f6e74b00",
+      "agent": {
+        "name": "roll-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"The contest ends on October 11, 2026 at 11:59 PM PDT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-12 08:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 396,
+            "completion_tokens": 713,
+            "cost_usd": 0.0019415,
+            "extra": {
+              "total_backend_latency_ms": 3722
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::roll-2-b2b83fd5",
+      "agent": {
+        "name": "roll-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Entries close March 3, 2026 at 11:59 PM PST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-03-04 08:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 740,
+            "cost_usd": 0.0020065,
+            "extra": {
+              "total_backend_latency_ms": 3186
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::roll-3-543814c4",
+      "agent": {
+        "name": "roll-3",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Los Angeles, USA. A contest page says: \"Deadline: 10:00 AM CET, February 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-02-02 01:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 701,
+            "cost_usd": 0.00191025,
+            "extra": {
+              "total_backend_latency_ms": 3049
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::roll-4-70229d73",
+      "agent": {
+        "name": "roll-4",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Lima, Peru. A contest page says: \"Submit by 8:00 AM JST on May 5, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-05-04 18:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 828,
+            "cost_usd": 0.00222775,
+            "extra": {
+              "total_backend_latency_ms": 3569
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-oct-1-6cb5f01a",
+      "agent": {
+        "name": "dst-oct-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Submissions close October 28, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-29 07:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 2033,
+            "cost_usd": 0.00524025,
+            "extra": {
+              "total_backend_latency_ms": 8372
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-oct-2-3412af14",
+      "agent": {
+        "name": "dst-oct-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"The live session starts October 30, 2026, 9:00 AM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-30 14:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 396,
+            "completion_tokens": 1058,
+            "cost_usd": 0.002804,
+            "extra": {
+              "total_backend_latency_ms": 4934
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-oct-3-8c03761b",
+      "agent": {
+        "name": "dst-oct-3",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in New York, USA. A contest page says: \"Voting closes October 27, 2026 at 18:00 CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-27 13:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 921,
+            "cost_usd": 0.002459,
+            "extra": {
+              "total_backend_latency_ms": 4003
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-oct-4-3f292505",
+      "agent": {
+        "name": "dst-oct-4",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Final round closes November 2, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-11-03 08:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 1162,
+            "cost_usd": 0.00306275,
+            "extra": {
+              "total_backend_latency_ms": 5797
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-mar-1-b414f13a",
+      "agent": {
+        "name": "dst-mar-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Entries close March 20, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-03-21 07:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 991,
+            "cost_usd": 0.002634,
+            "extra": {
+              "total_backend_latency_ms": 5233
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::dst-mar-2-403aa049",
+      "agent": {
+        "name": "dst-mar-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Los Angeles, USA. A contest page says: \"The webinar starts March 25, 2026, 12:00 PM CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-03-25 04:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 396,
+            "completion_tokens": 1219,
+            "cost_usd": 0.0032065,
+            "extra": {
+              "total_backend_latency_ms": 6375
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::sem-1-bbd1a3c7",
+      "agent": {
+        "name": "sem-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Deadline: 12:00 AM ET on October 12, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-12 06:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 1114,
+            "cost_usd": 0.0029415,
+            "extra": {
+              "total_backend_latency_ms": 4942
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::sem-2-bb8a8dcb",
+      "agent": {
+        "name": "sem-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Papers are due October 9, 2026 (23:59 AoE).\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-10 13:59",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 1437,
+            "cost_usd": 0.003749,
+            "extra": {
+              "total_backend_latency_ms": 6725
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::sem-3-1d318b1c",
+      "agent": {
+        "name": "sem-3",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Registration closes 12:00 PM PT, August 14, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-08-14 21:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 658,
+            "cost_usd": 0.0018015,
+            "extra": {
+              "total_backend_latency_ms": 3988
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::off-1-17bf2650",
+      "agent": {
+        "name": "off-1",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Deadline: 11:59 PM IST, November 10, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-11-10 19:29",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 394,
+            "completion_tokens": 819,
+            "cost_usd": 0.002204,
+            "extra": {
+              "total_backend_latency_ms": 4425
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::off-2-7d627768",
+      "agent": {
+        "name": "off-2",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Lima, Peru. A contest page says: \"Submissions close at 5:00 PM Nepal time on April 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-04-02 06:15\n\n\nThe deadline is at 17:00 NPT (UTC+5:45). Subtracting the offset from UTC gives 11:15 UTC, then subtracting 5 h for PET (UTC\u22125, no DST in either zone in 2026) yields 06:15 on the same calendar day in Lima.",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 397,
+            "completion_tokens": 1295,
+            "cost_usd": 0.00339775,
+            "extra": {
+              "total_backend_latency_ms": 7354
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::off-3-f7beeb6c",
+      "agent": {
+        "name": "off-3",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Applications close 10:00 AM Adelaide time, October 6, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-06 01:30",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 2036,
+            "cost_usd": 0.00524775,
+            "extra": {
+              "total_backend_latency_ms": 12363
+            }
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "deadline-math-direct-Run #1::off-4-e0fbddc1",
+      "agent": {
+        "name": "off-4",
+        "version": "0.6.1"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "user",
+          "message": "I live in Madrid, Spain. A contest page says: \"Entries close 6:00 PM Sydney time on October 3, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time).",
+          "extra": {
+            "sender_name": "User"
+          },
+          "timestamp": "2026-10-03T16:15:06.945981Z"
+        },
+        {
+          "step_id": 2,
+          "source": "agent",
+          "message": "ANSWER: 2026-10-03 10:00",
+          "extra": {
+            "sender_name": "xai/grok-4.20-0309-reasoning"
+          },
+          "metrics": {
+            "prompt_tokens": 395,
+            "completion_tokens": 1688,
+            "cost_usd": 0.00437775,
+            "extra": {
+              "total_backend_latency_ms": 9300
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

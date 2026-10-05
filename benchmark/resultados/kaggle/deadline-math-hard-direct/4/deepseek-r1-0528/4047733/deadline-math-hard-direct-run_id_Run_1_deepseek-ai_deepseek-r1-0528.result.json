@@ -1,0 +1,39 @@
+{
+  "task_name": "deadline-math-hard-direct",
+  "trial_name": "deadline-math-hard-direct-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "deepseek-ai/deepseek-r1-0528"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 497,
+    "n_output_tokens": 27304,
+    "cost_usd": 0.14811255
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.0
+    }
+  },
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "h-fmt-2: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.08856945) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/3676294868.py\", line 318, in deadline_math\n    response, output_tokens = ask(llm, case)\n                              ^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/3676294868.py\", line 307, in ask\n    raise RuntimeError(f\"{case.id}: no answer after 4 attempts (API error, not a wrong answer): {last_error}\")\nRuntimeError: h-fmt-2: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.08856945) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}\n",
+    "occurred_at": "2026-10-04T19:51:42.444094Z"
+  },
+  "started_at": "2026-10-04T19:43:24.053079Z",
+  "finished_at": "2026-10-04T19:51:42.444094Z"
+}

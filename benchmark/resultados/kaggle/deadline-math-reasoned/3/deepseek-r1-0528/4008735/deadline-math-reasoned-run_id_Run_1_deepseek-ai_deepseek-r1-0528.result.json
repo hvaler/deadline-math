@@ -1,0 +1,39 @@
+{
+  "task_name": "deadline-math-reasoned",
+  "trial_name": "deadline-math-reasoned-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "deepseek-ai/deepseek-r1-0528"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 83,
+    "n_output_tokens": 3384,
+    "cost_usd": 0.01838565
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.0
+    }
+  },
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "base-2: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.17705385) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/2005015767.py\", line 219, in deadline_math\n    response = ask(llm, case)\n               ^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/2005015767.py\", line 204, in ask\n    raise RuntimeError(f\"{case.id}: no answer after 4 attempts (API error, not a wrong answer): {last_error}\")\nRuntimeError: base-2: no answer after 4 attempts (API error, not a wrong answer): Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.17705385) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}\n",
+    "occurred_at": "2026-10-03T17:30:10.642416Z"
+  },
+  "started_at": "2026-10-03T17:26:06.049113Z",
+  "finished_at": "2026-10-03T17:30:10.642416Z"
+}

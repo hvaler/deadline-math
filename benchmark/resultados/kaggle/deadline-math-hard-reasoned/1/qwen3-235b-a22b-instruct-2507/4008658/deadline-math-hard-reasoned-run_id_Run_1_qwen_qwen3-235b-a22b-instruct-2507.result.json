@@ -1,0 +1,39 @@
+{
+  "task_name": "deadline-math-hard-reasoned",
+  "trial_name": "deadline-math-hard-reasoned-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "qwen/qwen3-235b-a22b-instruct-2507"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 203,
+    "n_output_tokens": 574,
+    "cost_usd": 0.0005497799999999999
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.0
+    }
+  },
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "h-dur-1: no answer after 4 attempts (API error, not a wrong answer): Error code: 429 - {'code': '', 'message': 'The model is currently experiencing heavy load. Try again later.', 'param': '', 'type': 'rate_limit_error'}",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/1989449771.py\", line 219, in deadline_math\n    response = ask(llm, case)\n               ^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/1989449771.py\", line 204, in ask\n    raise RuntimeError(f\"{case.id}: no answer after 4 attempts (API error, not a wrong answer): {last_error}\")\nRuntimeError: h-dur-1: no answer after 4 attempts (API error, not a wrong answer): Error code: 429 - {'code': '', 'message': 'The model is currently experiencing heavy load. Try again later.', 'param': '', 'type': 'rate_limit_error'}\n",
+    "occurred_at": "2026-10-03T17:28:22.666189Z"
+  },
+  "started_at": "2026-10-03T17:24:26.800957Z",
+  "finished_at": "2026-10-03T17:28:22.666189Z"
+}
