@@ -40,15 +40,26 @@ def binomial_dos_colas(k: int, n: int) -> float:
     return min(1.0, 2 * sum(comb(n, i) for i in range(extremo + 1)) / 2 ** n)
 
 
-def cargar_kaggle(task: str) -> dict[str, dict[str, tuple[str, str | None]]]:
-    """modelo -> {caso -> (estado, respuesta)} con la ejecución limpia más reciente; si no hay, la más reciente
-    completada (los pares con un caso infra se excluyen después, como dice el prerregistro)."""
+def cargar_kaggle(task: str, cual: str = "primera") -> dict[str, dict[str, tuple[str, str | None]]]:
+    """modelo -> {caso -> (estado, respuesta)}.
+
+    cual = "primera": la primera ejecución limpia de cada modelo, que es el resultado prerregistrado («one run per
+    model»); si no hay ninguna limpia, la primera completada (los pares con un caso infra se excluyen después).
+    cual = "replica": la segunda ejecución limpia (réplica, análisis secundario); los modelos sin ella no aparecen.
+    Las ejecuciones vienen en orden cronológico (versión y, dentro de ella, identificador de ejecución).
+    """
     datos = {}
     for modelo, ejecuciones in kr.leer_task(task).items():
+        limpias = [e for e in ejecuciones if e.limpia]
         completas = [e for e in ejecuciones if e.completada and not e.otro_protocolo]
-        if not completas:
-            continue
-        ej = kr.elegida(ejecuciones) or completas[-1]
+        if cual == "replica":
+            if len(limpias) < 2:
+                continue
+            ej = limpias[1]
+        else:
+            if not completas:
+                continue
+            ej = limpias[0] if limpias else completas[0]
         datos[modelo] = {i: (s, ej.respuestas.get(i)) for i, s in ej.casos.items()}
     return datos
 

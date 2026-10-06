@@ -96,6 +96,10 @@ def main() -> None:
     ampliacion = {m: d for m, d in datos.items() if m not in primarios}
     print(f"\n## Pares — prerregistrados ({len(primarios)} de {len(PRERREGISTRADOS)} completaron)\n")
     print(ap.informe(primarios, "prerregistrados"))
+    replica = {m: d for m, d in ap.cargar_kaggle("deadline-math-pairs-direct", "replica").items() if m in primarios}
+    if replica:
+        print(f"\n## Pares — réplica de los prerregistrados ({len(replica)} de {len(primarios)} con segunda ejecución)\n")
+        print(ap.informe(replica, "réplica"))
     if ampliacion:
         print(f"\n## Pares — ampliación, análisis secundario ({len(ampliacion)} modelos)\n")
         print(ap.informe(ampliacion, "ampliación"))

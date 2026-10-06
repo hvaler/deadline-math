@@ -146,6 +146,30 @@ class AnalisisPares(unittest.TestCase):
         self.assertIn("Se sostiene** (criterio: límite inferior > 50 %)", texto)
 
 
+class ReplicaPares(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.raiz = Path(self.tmp.name)
+        self.raiz_original, kr.RAIZ = kr.RAIZ, self.raiz
+
+    def tearDown(self):
+        kr.RAIZ = self.raiz_original
+        self.tmp.cleanup()
+
+    def test_el_resultado_principal_es_la_primera_ejecucion_y_la_replica_la_segunda(self):
+        import analisis_pares as ap
+        # Dos ejecuciones limpias en la misma versión: la primera acierta todo, la réplica falla una trampa.
+        _escribir_ejecucion(self.raiz, "deadline-math-pairs-direct", 1, "m/a", {})
+        carpeta = self.raiz / "deadline-math-pairs-direct" / "1" / "a"
+        (carpeta / "1").rename(carpeta / "100")
+        _escribir_ejecucion(self.raiz, "deadline-math-pairs-direct", 1, "m/a", {"pc-aut-01-T": "ANSWER: 2000-01-01 00:00"})
+        (carpeta / "1").rename(carpeta / "200")
+        primera = ap.cargar_kaggle("deadline-math-pairs-direct")["m/a"]
+        replica = ap.cargar_kaggle("deadline-math-pairs-direct", "replica")["m/a"]
+        self.assertEqual(primera["pc-aut-01-T"][0], "ok")
+        self.assertEqual(replica["pc-aut-01-T"][0], "wrong")
+
+
 class Prompts(unittest.TestCase):
     def test_prompt_estandar_no_cambia(self):
         # Si este texto cambia, las ejecuciones ya hechas dejan de ser comparables.
@@ -191,7 +215,8 @@ class Clasificacion(unittest.TestCase):
 def _escribir_ejecucion(raiz: Path, task: str, version: int, modelo: str, respuestas: dict[str, str | None],
                         estado: str = "BENCHMARK_TASK_RUN_STATE_COMPLETED", prompt_extra: str = "") -> None:
     """Crea una ejecución descargada mínima (run.json + atif.json) con las respuestas dadas por caso."""
-    juego, modo = kr.PROTOCOLO[task].juego, kr.PROTOCOLO[task].modo
+    proto = {**kr.PROTOCOLO, **kr.PROTOCOLO_PARES}[task]
+    juego, modo = proto.juego, proto.modo
     carpeta = raiz / task / str(version) / modelo.split("/")[-1] / "1"
     carpeta.mkdir(parents=True)
     aserciones, trayectorias = [], []

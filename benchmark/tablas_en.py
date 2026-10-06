@@ -113,6 +113,13 @@ def main() -> None:
     lineas += tabla_pares(primarios, f"Pre-registered result — paired set, {len(primarios)} of "
                           f"{len(ca.PRERREGISTRADOS)} pre-registered models",
                           "Primary analysis, exactly as pre-registered (direct mode, one run per model).")
+    replica_todo = ap.cargar_kaggle("deadline-math-pairs-direct", "replica")
+    replica = {m: d for m, d in replica_todo.items() if m in primarios}
+    if replica:
+        lineas += tabla_pares(replica, f"Replication — second run of the paired set, {len(replica)} of "
+                              f"{len(primarios)} pre-registered models",
+                              "Same models, task version and prompt, run once more at temperature 0. Secondary "
+                              "analysis, logged before running it; the pre-registered result above is the first run.")
     if ampliacion:
         lineas += tabla_pares(ampliacion, f"Secondary extension — paired set, {len(ampliacion)} more models",
                               "Same set, prompt and analysis on more models once quota allowed. Logged as a deviation "

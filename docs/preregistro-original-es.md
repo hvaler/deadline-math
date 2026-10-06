@@ -117,3 +117,14 @@ Generación y piloto local, 04/10. Ejecución en Kaggle, 05–06/10 si hay cuota
   penalización +25,1 % (IC +21,7 % a +28,3 %), 11 positivos / 2 negativos; 261/274 errores ingenuos (95 %). Claude Opus 5
   sale con −6 puntos (trampas 96 %, controles 90 %; McNemar p = 0,45, no significativo).
 - **2026-10-06 — Congelación de datos.** No se ejecuta nada más.
+- **2026-10-06 18:32 UTC — Reapertura de la congelación (desviación, escrita antes de ejecutar).** Kaggle ha añadido 5 modelos después del 03/10 (Claude Opus 5.5, Claude Sonnet 5.5, GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol). Se ejecutan las 5 tasks sobre ellos con la misma versión de cada task. El resultado prerregistrado (19 modelos) no cambia; los pares de estos modelos entran en la ampliación secundaria. Motivo: saber si los modelos más recientes también caen en la trampa.
+  Se reintentan también, en la misma reapertura: gpt-oss-120b (estándar directo y pares; ya completó las otras tres tasks) y Grok 4.5 y 4.6 (una prueba en el estándar directo; si el proxy sigue devolviendo 404, quedan fuera).
+  - 2026-10-06 18:38 UTC: Grok 4.5 y 4.6 vuelven a dar 404 («model not found») en el proxy; quedan fuera.
+  - 2026-10-06 ~18:50 UTC: el leaderboard público pinta las ejecuciones con error como resultado falso (0 en «Overall»). Se reintentan Qwen3 Next Thinking en las 4 tasks originales y Claude Sonnet 4.6 en el estándar directo para sustituirlas; se lanzan además los pares de Sonnet 4.6 (ampliación).
+  - 2026-10-06 ~18:55 UTC: Grok 4.5/4.6 retirados del benchmark público. Se reintentan 3 celdas más con ejecución fallida en la última versión: Qwen3 Coder 480B (estándar razonado) y Qwen3 Next Instruct (estándar razonado y difícil razonado).
+- **2026-10-06 19:14 UTC — Réplica (análisis secundario, escrita antes de ejecutarla).** Se repite una vez el conjunto de pares (misma versión de la task, mismo prompt, temperatura 0) sobre los 19 modelos prerregistrados. **El resultado principal sigue siendo la primera ejecución limpia de cada modelo**, tal como se prerregistró; la réplica se analiza aparte con los mismos criterios de H1 y H2 y se informa sea cual sea. Motivo: la temperatura 0 no es determinista (repetibilidad del 92,8 % en las tasks originales) y conviene saber si el resultado se repite.
+- 2026-10-07 ~01:00 UTC — **Resultado de la reapertura y de la réplica.**
+  - **Réplica (secundaria): H1 y H2 se repiten.** 18 de 19 modelos (Qwen3 Next Thinking falla todos los reintentos con 429): penalización +29,6 % (IC +26,0 % a +33,1 %); 277/306 errores ingenuos (91 %).
+  - Ampliación (secundaria), ya con 24 modelos: penalización +22,6 % (IC +19,7 % a +25,4 %); 308/321 (96 %). Claude Opus 5.5, Sonnet 5.5, GPT-6 Sol y GPT-6.1 Sol: 100 % en trampas y controles; GPT-6 Luna 86 % / 100 %.
+  - Cohorte de las 4 tasks: 43 modelos. Quedan fuera gpt-oss-120b (dos ejecuciones colgadas) y Grok 4.5/4.6 (404).
+- **2026-10-07 — Nueva congelación de datos.** No se ejecuta nada más.

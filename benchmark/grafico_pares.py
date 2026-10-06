@@ -31,6 +31,9 @@ NOMBRES = {  # slug -> nombre legible
     "grok-4.20-0309-reasoning": "Grok 4.20 Reasoning", "qwen3-coder-480b-a35b-instruct": "Qwen3 Coder 480B",
     "qwen3-next-80b-a3b-thinking": "Qwen3 Next Thinking", "qwen3-next-80b-a3b-instruct": "Qwen3 Next Instruct",
     "qwen3-235b-a22b-instruct-2507": "Qwen3 235B", "deepseek-r1-0528": "DeepSeek R1",
+    "claude-sonnet-4-6@default": "Claude Sonnet 4.6", "claude-opus-5-5@default": "Claude Opus 5.5",
+    "claude-sonnet-5-5@default": "Claude Sonnet 5.5", "gpt-6-luna": "GPT-6 Luna", "gpt-6-sol": "GPT-6 Sol",
+    "gpt-6.1-sol": "GPT-6.1 Sol",
 }
 
 

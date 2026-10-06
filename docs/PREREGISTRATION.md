@@ -118,3 +118,10 @@ Oct 8–10. Publication, Sunday Oct 11.
   penalty +25.1% (CI +21.7% to +28.3%), 11 positive / 2 negative; 261/274 naive errors (95%). Claude Opus 5 comes out
   at −6 points (traps 96%, controls 90%; McNemar p = 0.45, not significant).
 - **2026-10-06 — Data freeze.** No further runs.
+- **2026-10-06 18:32 UTC — Data freeze reopened (deviation, written before running).** Kaggle added 5 models after Oct 3 (Claude Opus 5.5, Claude Sonnet 5.5, GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol). All 5 tasks run on them with the same task versions. The pre-registered result (19 models) does not change; their pairs join the secondary extension. Also retried: gpt-oss-120b, Grok 4.5/4.6 (404 again, excluded), and cells whose latest run had failed on infrastructure (the public leaderboard shows those as 0).
+- **2026-10-06 19:14 UTC — Replication (secondary, written before running).** The pairs set is run once more on the 19 pre-registered models (same task version, prompt, temperature 0). The primary result stays the first clean run of each model; the replication is analysed separately with the same H1/H2 criteria and reported whatever it shows.
+- 2026-10-07 ~01:00 UTC — **Results.**
+  - **Replication: H1 and H2 replicate.** 18 of 19 models (Qwen3 Next Thinking failed every retry with 429): penalty +29.6% (CI +26.0% to +33.1%); 277/306 naive errors (91%).
+  - Extension (secondary), now 24 models: penalty +22.6% (CI +19.7% to +25.4%); 308/321 (96%). Claude Opus 5.5, Sonnet 5.5, GPT-6 Sol and GPT-6.1 Sol: 100% on traps and controls; GPT-6 Luna 86% / 100%.
+  - 4-task cohort: 43 models. Excluded: gpt-oss-120b (two runs hung) and Grok 4.5/4.6 (404).
+- **2026-10-07 — New data freeze.** No further runs.

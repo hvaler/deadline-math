@@ -1,6 +1,6 @@
-# Deadline Math — cohorte de 38 modelos con las 4 tasks completas
+# Deadline Math — cohorte de 43 modelos con las 4 tasks completas
 
-Generado 2026-10-06 14:15 UTC por `kaggle_resultados.py --informe`. Una ejecución por modelo y condición; acierto = hora local extraída correcta.
+Generado 2026-10-06 22:57 UTC por `kaggle_resultados.py --informe`. Una ejecución por modelo y condición; acierto = hora local extraída correcta.
 
 | modelo | std direct | std reasoned | hard direct | hard reasoned |
 |---|---|---|---|---|
@@ -9,9 +9,11 @@ Generado 2026-10-06 14:15 UTC por `kaggle_resultados.py --informe`. Una ejecuci�
 | anthropic/claude-opus-4-6@default | 15/20 (v12) | 19/20 (v8) | 10/11 (v4) | 10/11 (v4) |
 | anthropic/claude-opus-4-7@default | 19/20 (v12) | 20/20 (v8) | 10/11 (v4) | 10/11 (v4) |
 | anthropic/claude-opus-4-8@default | 19/20 (v12) | 20/20 (v8) | 10/11 (v4) | 10/11 (v4) |
+| anthropic/claude-opus-5-5@default | 20/20 (v12) | 20/20 (v8) | 10/11 (v4) | 11/11 (v4) |
 | anthropic/claude-opus-5@default | 17/20 (v12) | 20/20 (v8) | 10/11 (v4) | 11/11 (v4) |
 | anthropic/claude-sonnet-4-5@20250929 | 15/20 (v12) | 20/20 (v8) | 3/11 (v4) | 9/11 (v4) |
-| anthropic/claude-sonnet-4-6@default | 17/20 (v12) | 20/20 (v8) | 6/11 (v4) | 8/11 (v4) |
+| anthropic/claude-sonnet-4-6@default | 16/20 (v12) | 20/20 (v8) | 6/11 (v4) | 8/11 (v4) |
+| anthropic/claude-sonnet-5-5@default | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
 | anthropic/claude-sonnet-5@default | 20/20 (v12) | 20/20 (v8) | 9/11 (v4) | 11/11 (v4) |
 | deepseek-ai/deepseek-r1-0528 | 20/20 (v12) | 20/20 (v8) | 10/11 (v4) | 10/11 (v4) |
 | google/gemini-2.5-flash | 17/20 (v12) | 20/20 (v8) | 8/11 (v4) | 7/11 (v4) |
@@ -34,10 +36,13 @@ Generado 2026-10-06 14:15 UTC por `kaggle_resultados.py --informe`. Una ejecuci�
 | openai/gpt-5.6-sol | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
 | openai/gpt-5.6-terra | 18/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
 | openai/gpt-6-astra | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
+| openai/gpt-6-luna | 18/20 (v12) | 19/20 (v8) | 11/11 (v4) | 11/11 (v4) |
+| openai/gpt-6-sol | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
+| openai/gpt-6.1-sol | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
 | openai/gpt-oss-20b | 18/20 (v12) | 18/20 (v8) | 8/11 (v4) | 8/11 (v4) |
 | qwen/qwen3-235b-a22b-instruct-2507 | 7/20 (v12) | 13/20 (v8) | 1/11 (v4) | 4/11 (v4) |
-| qwen/qwen3-coder-480b-a35b-instruct | 3/20 (v12) | 12/20 (v3) | 0/11 (v4) | 4/11 (v4) |
-| qwen/qwen3-next-80b-a3b-instruct | 7/20 (v12) | 16/20 (v3) | 1/11 (v4) | 2/11 (v3) |
+| qwen/qwen3-coder-480b-a35b-instruct | 3/20 (v12) | 13/20 (v8) | 0/11 (v4) | 4/11 (v4) |
+| qwen/qwen3-next-80b-a3b-instruct | 7/20 (v12) | 16/20 (v8) | 1/11 (v4) | 6/11 (v4) |
 | qwen/qwen3-next-80b-a3b-thinking | 20/20 (v3) | 19/20 (v3) | 9/11 (v1) | 8/11 (v1) |
 | xai/grok-4.20-0309-non-reasoning | 11/20 (v12) | 14/20 (v8) | 1/11 (v4) | 2/11 (v4) |
 | xai/grok-4.20-0309-reasoning | 20/20 (v12) | 20/20 (v8) | 11/11 (v4) | 11/11 (v4) |
@@ -45,13 +50,13 @@ Generado 2026-10-06 14:15 UTC por `kaggle_resultados.py --informe`. Una ejecuci�
 
 | condición | aciertos | wrong | no_answer | truncated | una sola línea ANSWER |
 |---|---|---|---|---|---|
-| std direct | 629/760 (82.8%) | 113 | 18 | 0 | 699/760 |
-| std reasoned | 712/760 (93.7%) | 48 | 0 | 0 | no se pide |
-| hard direct | 285/418 (68.2%) | 126 | 7 | 0 | 371/418 |
-| hard reasoned | 321/418 (76.8%) | 96 | 1 | 0 | no se pide |
+| std direct | 726/860 (84.4%) | 116 | 18 | 0 | 793/860 |
+| std reasoned | 812/860 (94.4%) | 48 | 0 | 0 | no se pide |
+| hard direct | 339/473 (71.7%) | 126 | 8 | 0 | 424/473 |
+| hard reasoned | 380/473 (80.3%) | 92 | 1 | 0 | no se pide |
 
 ## Fuera de la cohorte (3): no completados, no puntúan como 0 %
 
-- openai/gpt-oss-120b — std direct: saturado (429); std reasoned: saturado (429)
+- openai/gpt-oss-120b — std direct: saturado (429)
 - xai/grok-4.5-0708 — std direct: modelo no encontrado (404); std reasoned: modelo no encontrado (404); hard direct: modelo no encontrado (404); hard reasoned: modelo no encontrado (404)
 - xai/grok-4.6 — std direct: modelo no encontrado (404); std reasoned: modelo no encontrado (404); hard direct: modelo no encontrado (404); hard reasoned: modelo no encontrado (404)

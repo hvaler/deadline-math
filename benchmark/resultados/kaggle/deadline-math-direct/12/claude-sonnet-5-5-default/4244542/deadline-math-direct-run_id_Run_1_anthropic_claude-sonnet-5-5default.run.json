@@ -1,0 +1,1112 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "deadline-math-direct",
+    "description": "Standard set, answer-only mode. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.",
+    "definition": "@kbench.task(\n    name=\"deadline-math-direct\",\n    # Must be a literal of at most 255 characters, or Kaggle rejects the task.\n    description=\"Standard set, answer-only mode. Convert a published contest deadline to the reader's local time: day rollover, the weeks when the EU and US change clocks on different dates, 12 AM and AoE wording, non-hour offsets. Ground truth from zoneinfo.\",\n)\ndef deadline_math(llm) -> float:\n    passed = 0\n    for case in CASE_SETS[SET]:\n        response, output_tokens = ask(llm, case)\n        answer = parse_answer(response)\n        # No answer line and close to the limit: the reply was cut off. Scored as a failure, but flagged.\n        truncated = answer is None and output_tokens >= 0.95 * MAX_TOKENS\n        kbench.assertions.assert_equal(\n            case.expected, answer,\n            expectation=f\"[{case.category}] {case.id}: {case.statement} -> {case.reader} = {case.expected}\"\n            + (f\" (truncated at max_tokens={MAX_TOKENS})\" if truncated else \"\"),\n        )\n        passed += answer == case.expected\n    # Share of correct answers: Kaggle does not support \"passed of total\" yet (it reads a tuple as value \u00c2\u00b1 CI).\n    return passed / len(CASE_SETS[SET])\n"
+  },
+  "modelVersion": {
+    "slug": "anthropic/claude-sonnet-5-5@default"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-10-06T18:33:46.620573Z",
+  "endTime": "2026-10-06T18:34:21.334157Z",
+  "conversations": [
+    {
+      "id": "deadline-math-direct-10eda6cd",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-1-try1-7f18e292",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close September 30, 2026 at 5:00 PM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "September 30, 2026: ET is EDT (UTC-4), so 5:00 PM EDT = 21:00 UTC. Madrid in late September is CEST (UTC+2), so 23:00.\n\nANSWER: 2026-09-30 23:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 111,
+            "outputTokens": 86,
+            "inputTokensCostNanodollars": "222000",
+            "outputTokensCostNanodollars": "860000",
+            "totalBackendLatencyMs": "1004"
+          },
+          "id": "base-1-try1-7f18e292-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 111,
+        "outputTokens": 86,
+        "inputTokensCostNanodollars": "222000",
+        "outputTokensCostNanodollars": "860000",
+        "totalBackendLatencyMs": "1004"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-2-try1-06500013",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Deadline: July 15, 2026, 12:00 UTC.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-07-15 07:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 108,
+            "outputTokens": 19,
+            "inputTokensCostNanodollars": "216000",
+            "outputTokensCostNanodollars": "190000",
+            "totalBackendLatencyMs": "642"
+          },
+          "id": "base-2-try1-06500013-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 108,
+        "outputTokens": 19,
+        "inputTokensCostNanodollars": "216000",
+        "outputTokensCostNanodollars": "190000",
+        "totalBackendLatencyMs": "642"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "base-3-try1-553c34d0",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Tokyo, Japan. A contest page says: \"Applications are due June 1, 2026 at 9:00 AM CEST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "CEST is UTC+2, so 9:00 AM CEST is 07:00 UTC. Tokyo is UTC+9, which makes it 16:00 on the same day.\n\nANSWER: 2026-06-01 16:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 113,
+            "outputTokens": 77,
+            "inputTokensCostNanodollars": "226000",
+            "outputTokensCostNanodollars": "770000",
+            "totalBackendLatencyMs": "1017"
+          },
+          "id": "base-3-try1-553c34d0-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 113,
+        "outputTokens": 77,
+        "inputTokensCostNanodollars": "226000",
+        "outputTokensCostNanodollars": "770000",
+        "totalBackendLatencyMs": "1017"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-1-try1-7828e0b7",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The contest ends on October 11, 2026 at 11:59 PM PDT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-12 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 113,
+            "outputTokens": 113,
+            "inputTokensCostNanodollars": "226000",
+            "outputTokensCostNanodollars": "1130000",
+            "totalBackendLatencyMs": "1096"
+          },
+          "id": "roll-1-try1-7828e0b7-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 113,
+        "outputTokens": 113,
+        "inputTokensCostNanodollars": "226000",
+        "outputTokensCostNanodollars": "1130000",
+        "totalBackendLatencyMs": "1096"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-2-try1-66221fc0",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 3, 2026 at 11:59 PM PST.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-04 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 135,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1350000",
+            "totalBackendLatencyMs": "1415"
+          },
+          "id": "roll-2-try1-66221fc0-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 135,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1350000",
+        "totalBackendLatencyMs": "1415"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-3-try1-cb113942",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"Deadline: 10:00 AM CET, February 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-02-02 01:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 111,
+            "outputTokens": 19,
+            "inputTokensCostNanodollars": "222000",
+            "outputTokensCostNanodollars": "190000",
+            "totalBackendLatencyMs": "510"
+          },
+          "id": "roll-3-try1-cb113942-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 111,
+        "outputTokens": 19,
+        "inputTokensCostNanodollars": "222000",
+        "outputTokensCostNanodollars": "190000",
+        "totalBackendLatencyMs": "510"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "roll-4-try1-9ec00b99",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submit by 8:00 AM JST on May 5, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "JST is UTC+9, and Lima is UTC-5, a 14-hour difference. 8:00 AM JST on May 5 is 23:00 UTC on May 4, which is 18:00 in Lima on May 4.\n\nANSWER: 2026-05-04 18:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 108,
+            "outputTokens": 93,
+            "inputTokensCostNanodollars": "216000",
+            "outputTokensCostNanodollars": "930000",
+            "totalBackendLatencyMs": "1763"
+          },
+          "id": "roll-4-try1-9ec00b99-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 108,
+        "outputTokens": 93,
+        "inputTokensCostNanodollars": "216000",
+        "outputTokensCostNanodollars": "930000",
+        "totalBackendLatencyMs": "1763"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-1-try1-a6126552",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Submissions close October 28, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-29 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 111,
+            "outputTokens": 177,
+            "inputTokensCostNanodollars": "222000",
+            "outputTokensCostNanodollars": "1770000",
+            "totalBackendLatencyMs": "1811"
+          },
+          "id": "dst-oct-1-try1-a6126552-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 111,
+        "outputTokens": 177,
+        "inputTokensCostNanodollars": "222000",
+        "outputTokensCostNanodollars": "1770000",
+        "totalBackendLatencyMs": "1811"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-2-try1-3b8f80e6",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"The live session starts October 30, 2026, 9:00 AM ET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-30 14:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 181,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1810000",
+            "totalBackendLatencyMs": "1479"
+          },
+          "id": "dst-oct-2-try1-3b8f80e6-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 181,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1810000",
+        "totalBackendLatencyMs": "1479"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-3-try1-9faad717",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in New York, USA. A contest page says: \"Voting closes October 27, 2026 at 18:00 CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-27 13:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 106,
+            "outputTokens": 241,
+            "inputTokensCostNanodollars": "212000",
+            "outputTokensCostNanodollars": "2410000",
+            "totalBackendLatencyMs": "2008"
+          },
+          "id": "dst-oct-3-try1-9faad717-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 106,
+        "outputTokens": 241,
+        "inputTokensCostNanodollars": "212000",
+        "outputTokensCostNanodollars": "2410000",
+        "totalBackendLatencyMs": "2008"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-oct-4-try1-c81ce3b8",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Final round closes November 2, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-11-03 08:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 111,
+            "outputTokens": 250,
+            "inputTokensCostNanodollars": "222000",
+            "outputTokensCostNanodollars": "2500000",
+            "totalBackendLatencyMs": "2010"
+          },
+          "id": "dst-oct-4-try1-c81ce3b8-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 111,
+        "outputTokens": 250,
+        "inputTokensCostNanodollars": "222000",
+        "outputTokensCostNanodollars": "2500000",
+        "totalBackendLatencyMs": "2010"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-1-try1-50b04b18",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close March 20, 2026 at 11:59 PM PT.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-21 07:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 146,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1460000",
+            "totalBackendLatencyMs": "1505"
+          },
+          "id": "dst-mar-1-try1-50b04b18-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 146,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1460000",
+        "totalBackendLatencyMs": "1505"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "dst-mar-2-try1-7c57d3fe",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Los Angeles, USA. A contest page says: \"The webinar starts March 25, 2026, 12:00 PM CET.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-03-25 04:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 112,
+            "outputTokens": 178,
+            "inputTokensCostNanodollars": "224000",
+            "outputTokensCostNanodollars": "1780000",
+            "totalBackendLatencyMs": "1863"
+          },
+          "id": "dst-mar-2-try1-7c57d3fe-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 112,
+        "outputTokens": 178,
+        "inputTokensCostNanodollars": "224000",
+        "outputTokensCostNanodollars": "1780000",
+        "totalBackendLatencyMs": "1863"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-1-try1-bbab408d",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 12:00 AM ET on October 12, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-12 06:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 176,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1760000",
+            "totalBackendLatencyMs": "1575"
+          },
+          "id": "sem-1-try1-bbab408d-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 176,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1760000",
+        "totalBackendLatencyMs": "1575"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-2-try1-1a301a2a",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Papers are due October 9, 2026 (23:59 AoE).\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "AoE = UTC-12. So 2026-10-09 23:59 AoE = 2026-10-10 11:59 UTC.\n\nMadrid on Oct 10, 2026: CEST (UTC+2) until the last Sunday of October (Oct 25). So 13:59.\n\nANSWER: 2026-10-10 13:59"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 111,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1110000",
+            "totalBackendLatencyMs": "1135"
+          },
+          "id": "sem-2-try1-1a301a2a-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 111,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1110000",
+        "totalBackendLatencyMs": "1135"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "sem-3-try1-8dffbeb1",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Registration closes 12:00 PM PT, August 14, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "August 14, 2026: PT is daylight time (PDT, UTC-7). 12:00 PDT = 19:00 UTC. Madrid in August is CEST (UTC+2), so 21:00.\n\nANSWER: 2026-08-14 21:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 87,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "870000",
+            "totalBackendLatencyMs": "961"
+          },
+          "id": "sem-3-try1-8dffbeb1-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 87,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "870000",
+        "totalBackendLatencyMs": "961"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-1-try1-0a5b5e3b",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Deadline: 11:59 PM IST, November 10, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "IST is ambiguous (India Standard Time UTC+5:30, Irish Summer Time UTC+1, Israel Standard Time UTC+2), but in a contest context India is most likely.\n\nIndia: 23:59 IST = 18:29 UTC. Madrid on Nov 10, 2026 is CET (UTC+1), so 19:29.\n\nANSWER: 2026-11-10 19:29"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 110,
+            "outputTokens": 134,
+            "inputTokensCostNanodollars": "220000",
+            "outputTokensCostNanodollars": "1340000",
+            "totalBackendLatencyMs": "1687"
+          },
+          "id": "off-1-try1-0a5b5e3b-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 110,
+        "outputTokens": 134,
+        "inputTokensCostNanodollars": "220000",
+        "outputTokensCostNanodollars": "1340000",
+        "totalBackendLatencyMs": "1687"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-2-try1-b71244fa",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Lima, Peru. A contest page says: \"Submissions close at 5:00 PM Nepal time on April 2, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "Nepal time is UTC+5:45, and Lima is UTC-5 with no daylight saving, so the difference is 10 hours 45 minutes.\n\n5:00 PM Nepal time on April 2 is 11:15 UTC. Subtracting 5 hours gives 06:15 in Lima on April 2, 2026.\n\nANSWER: 2026-04-02 06:15"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 113,
+            "outputTokens": 127,
+            "inputTokensCostNanodollars": "226000",
+            "outputTokensCostNanodollars": "1270000",
+            "totalBackendLatencyMs": "2302"
+          },
+          "id": "off-2-try1-b71244fa-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 113,
+        "outputTokens": 127,
+        "inputTokensCostNanodollars": "226000",
+        "outputTokensCostNanodollars": "1270000",
+        "totalBackendLatencyMs": "2302"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-3-try1-ff942380",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Applications close 10:00 AM Adelaide time, October 6, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-06 01:30"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 113,
+            "outputTokens": 229,
+            "inputTokensCostNanodollars": "226000",
+            "outputTokensCostNanodollars": "2290000",
+            "totalBackendLatencyMs": "2019"
+          },
+          "id": "off-3-try1-ff942380-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 113,
+        "outputTokens": 229,
+        "inputTokensCostNanodollars": "226000",
+        "outputTokensCostNanodollars": "2290000",
+        "totalBackendLatencyMs": "2019"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    },
+    {
+      "id": "off-4-try1-5a70844d",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "I live in Madrid, Spain. A contest page says: \"Entries close 6:00 PM Sydney time on October 3, 2026.\"\nWhen is that deadline in my local time? Reply with exactly one line and nothing else: ANSWER: YYYY-MM-DD HH:MM (24-hour clock, my local time)."
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "ANSWER: 2026-10-03 10:00"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "anthropic/claude-sonnet-5-5@default"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 112,
+            "outputTokens": 328,
+            "inputTokensCostNanodollars": "224000",
+            "outputTokensCostNanodollars": "3280000",
+            "totalBackendLatencyMs": "3074"
+          },
+          "id": "off-4-try1-5a70844d-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 112,
+        "outputTokens": 328,
+        "inputTokensCostNanodollars": "224000",
+        "outputTokensCostNanodollars": "3280000",
+        "totalBackendLatencyMs": "3074"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "numericResult": {
+        "value": 1.0
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "expectation": "[base] base-1: Submissions close September 30, 2026 at 5:00 PM ET. -> Madrid, Spain = 2026-09-30 23:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-2: Deadline: July 15, 2026, 12:00 UTC. -> Lima, Peru = 2026-07-15 07:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[base] base-3: Applications are due June 1, 2026 at 9:00 AM CEST. -> Tokyo, Japan = 2026-06-01 16:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-1: The contest ends on October 11, 2026 at 11:59 PM PDT. -> Madrid, Spain = 2026-10-12 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-2: Entries close March 3, 2026 at 11:59 PM PST. -> Madrid, Spain = 2026-03-04 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-3: Deadline: 10:00 AM CET, February 2, 2026. -> Los Angeles, USA = 2026-02-02 01:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[day-rollover] roll-4: Submit by 8:00 AM JST on May 5, 2026. -> Lima, Peru = 2026-05-04 18:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-1: Submissions close October 28, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-10-29 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-2: The live session starts October 30, 2026, 9:00 AM ET. -> Madrid, Spain = 2026-10-30 14:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-3: Voting closes October 27, 2026 at 18:00 CET. -> New York, USA = 2026-10-27 13:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-autumn] dst-oct-4: Final round closes November 2, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-11-03 08:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-1: Entries close March 20, 2026 at 11:59 PM PT. -> Madrid, Spain = 2026-03-21 07:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[dst-gap-spring] dst-mar-2: The webinar starts March 25, 2026, 12:00 PM CET. -> Los Angeles, USA = 2026-03-25 04:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-1: Deadline: 12:00 AM ET on October 12, 2026. -> Madrid, Spain = 2026-10-12 06:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-2: Papers are due October 9, 2026 (23:59 AoE). -> Madrid, Spain = 2026-10-10 13:59",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[wording] sem-3: Registration closes 12:00 PM PT, August 14, 2026. -> Madrid, Spain = 2026-08-14 21:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-1: Deadline: 11:59 PM IST, November 10, 2026. -> Madrid, Spain = 2026-11-10 19:29",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-2: Submissions close at 5:00 PM Nepal time on April 2, 2026. -> Lima, Peru = 2026-04-02 06:15",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-3: Applications close 10:00 AM Adelaide time, October 6, 2026. -> Madrid, Spain = 2026-10-06 01:30",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    },
+    {
+      "expectation": "[offsets] off-4: Entries close 6:00 PM Sydney time on October 3, 2026. -> Madrid, Spain = 2026-10-03 10:00",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 322,
+      "definition": "kbench.assertions.assert_equal(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "deadline-math-direct-10eda6cd"
+        }
+      ]
+    }
+  ],
+  "pyRunId": "deadline-math-direct-Run #1"
+}
