@@ -46,21 +46,21 @@ def filas(datos: dict) -> list[tuple[str, float, float]]:
     return sorted(resultado, key=lambda f: (-(f[2] - f[1]), f[1]))  # mayor caída arriba
 
 
-def svg(grupos: list[tuple[str, list]]) -> str:
-    ancho, izq, der, fila, arriba = 1000, 230, 90, 22, 118
+def svg(grupos: list[tuple[str, list]], pie: str) -> str:
+    ancho, izq, der, fila, arriba = 1000, 230, 90, 22, 136
     x = lambda v: izq + v * (ancho - izq - der)
     alto = arriba + sum(len(g) * fila + 40 for _, g in grupos) + 40
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{ancho}" height="{alto}" viewBox="0 0 {ancho} {alto}" '
          f'font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">',
          f'<rect width="100%" height="100%" fill="{SUPERFICIE}"/>',
-         f'<text x="24" y="36" font-size="22" font-weight="700" fill="{TINTA}">Same deadline, one week apart</text>',
-         f'<text x="24" y="60" font-size="14" fill="{TINTA_2}">Share of correct answers on 50 matched pairs: the control date '
-         f'vs. the trap date inside the EU/US clock-change gap (direct mode, Kaggle).</text>']
+         f'<text x="24" y="36" font-size="22" font-weight="700" fill="{TINTA}">Same sentence, trap date vs. control date</text>',
+         f'<text x="24" y="60" font-size="14" fill="{TINTA_2}">Share of correct answers on 50 trap/control pairs (direct mode, Kaggle). Controls move the date out of the EU/US</text>',
+         f'<text x="24" y="78" font-size="14" fill="{TINTA_2}">gap (7 days earlier in autumn, 21 days later in spring) or keep a duration from crossing a clock change.</text>']
     # Leyenda: forma + color + texto (la identidad nunca va solo en el color).
-    p += [f'<circle cx="30" cy="86" r="8" fill="{AZUL}"/><text x="42" y="91" font-size="13" fill="{TINTA}">Control</text>',
-          f'<path d="M118 80 l6 6 l-6 6 l-6 -6 z" fill="{NARANJA}"/>'
-          f'<text x="132" y="91" font-size="13" fill="{TINTA}">Trap (gap week or duration across a clock change)</text>',
-          f'<text x="{ancho - 24}" y="91" font-size="13" text-anchor="end" fill="{TINTA_2}">Trap vs. control</text>']
+    p += [f'<circle cx="30" cy="104" r="8" fill="{AZUL}"/><text x="42" y="109" font-size="13" fill="{TINTA}">Control</text>',
+          f'<path d="M118 98 l6 6 l-6 6 l-6 -6 z" fill="{NARANJA}"/>'
+          f'<text x="132" y="109" font-size="13" fill="{TINTA}">Trap (gap week or duration across a clock change)</text>',
+          f'<text x="{ancho - 24}" y="109" font-size="13" text-anchor="end" fill="{TINTA_2}">Trap vs. control</text>']
     y = arriba
     for titulo, datos in grupos:
         p.append(f'<text x="24" y="{y + 4}" font-size="13" font-weight="700" fill="{TINTA_2}">{escape(titulo)}</text>')
@@ -82,8 +82,7 @@ def svg(grupos: list[tuple[str, list]]) -> str:
         y += 20
     for v in (0, 0.25, 0.5, 0.75, 1):
         p.append(f'<text x="{x(v):.1f}" y="{y - 2}" font-size="12" text-anchor="middle" fill="{TINTA_2}">{int(v * 100)}%</text>')
-    p.append(f'<text x="24" y="{alto - 12}" font-size="12" fill="{TINTA_2}">Pre-registered cohort: hypotheses and design fixed '
-             f'before the run. Extension: same set, logged as a deviation, reported separately. github.com/hvaler/deadline-math</text>')
+    p.append(f'<text x="24" y="{alto - 12}" font-size="12" fill="{TINTA_2}">{escape(pie)}</text>')
     p.append("</svg>")
     return "\n".join(p)
 
@@ -94,11 +93,21 @@ def main() -> None:
     primarios = {norm[ca.kr_norm(m)]: datos[norm[ca.kr_norm(m)]] for m in ca.PRERREGISTRADOS if ca.kr_norm(m) in norm}
     ampliacion = {m: d for m, d in datos.items() if m not in primarios}
     f1, f2 = filas(primarios), filas(ampliacion)
-    contenido = svg([(f"Pre-registered cohort ({len(f1)} models)", f1), (f"Extension ({len(f2)} models)", f2)])
-    destino = ap.SALIDA / "grafico-pares.html"
-    destino.write_text(f'<!doctype html><meta charset="utf-8"><body style="margin:0;background:{SUPERFICIE}">'
-                       f'{contenido}</body>', encoding="utf-8")
-    print(destino, len(f1), len(f2))
+    pie_todo = ("Pre-registered cohort: hypotheses and design fixed before the run. Extension: same set, logged as a "
+                "deviation, reported separately. github.com/hvaler/deadline-math")
+    pie_19 = ("Pre-registered cohort only: hypotheses, design and models fixed before the run. Extension to 18 more "
+              "models: github.com/hvaler/deadline-math")
+    versiones = {  # la del artículo (solo prerregistrados) y la completa (enlazada)
+        "grafico-pares-prerregistrados.html": svg([(f"Pre-registered cohort ({len(f1)} models)", f1)], pie_19),
+        "grafico-pares.html": svg([(f"Pre-registered cohort ({len(f1)} models)", f1),
+                                   (f"Extension ({len(f2)} models)", f2)], pie_todo),
+    }
+    for nombre_fichero, contenido in versiones.items():
+        destino = ap.SALIDA / nombre_fichero
+        destino.write_text(f'<!doctype html><meta charset="utf-8"><body style="margin:0;background:{SUPERFICIE}">'
+                           f'{contenido}</body>', encoding="utf-8")
+        print(destino)
+    print(len(f1), len(f2))
 
 
 if __name__ == "__main__":
