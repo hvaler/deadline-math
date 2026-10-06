@@ -76,13 +76,9 @@ def pares_validos(casos: dict[str, tuple[str, str | None]]) -> list[tuple[str, s
     return validos
 
 
-def informe(datos: dict[str, dict[str, tuple[str, str | None]]], titulo: str) -> str:
-    lineas = [f"# Pares prerregistrados — {titulo}", "",
-              "Trampa = la fecha cae donde la diferencia habitual no vale; control = el mismo enunciado fuera de ese "
-              "periodo. Penalización = acierto en controles − acierto en trampas. IC al 95 %.", "",
-              "| modelo | pares | trampas | controles | penalización | b / c | McNemar p | errores = ingenua |",
-              "|---|---|---|---|---|---|---|---|"]
-    penalizaciones, signos = {}, [0, 0]
+def estadisticas(datos: dict[str, dict[str, tuple[str, str | None]]]) -> dict:
+    """Todas las cifras del análisis prerregistrado; informe() y tablas_en.py solo las formatean."""
+    filas, penalizaciones, signos = [], {}, [0, 0]
     ingenuas, equivocadas = 0, 0
     por_estrato = defaultdict(lambda: [0, 0, 0])  # estrato -> [aciertos trampa, aciertos control, pares]
     for modelo, casos in sorted(datos.items()):
@@ -102,15 +98,13 @@ def informe(datos: dict[str, dict[str, tuple[str, str | None]]], titulo: str) ->
         penalizaciones[modelo] = {t: (casos[c][0] == "ok") - (casos[t][0] == "ok") for t, c in pares}
         signos[0 if pen > 0 else 1] += pen != 0
         for t, c in pares:
-            caso = CASO[t]
-            estrato = caso.category.rsplit("-", 1)[0].replace("pair-", "")
+            estrato = CASO[t].category.rsplit("-", 1)[0].replace("pair-", "")
             por_estrato[estrato][0] += casos[t][0] == "ok"
             por_estrato[estrato][1] += casos[c][0] == "ok"
             por_estrato[estrato][2] += 1
-        wt, wc = wilson(ok_t, n), wilson(ok_c, n)
-        lineas.append(f"| {modelo} | {n} | {ok_t / n:.0%} [{wt[0]:.0%}–{wt[1]:.0%}] | {ok_c / n:.0%} "
-                      f"[{wc[0]:.0%}–{wc[1]:.0%}] | {pen:+.0%} | {b} / {c_} | {binomial_dos_colas(b, b + c_):.3g} | "
-                      f"{iguales}/{len(mal)} |")
+        filas.append({"modelo": modelo, "n": n, "ok_t": ok_t, "ok_c": ok_c, "wt": wilson(ok_t, n),
+                      "wc": wilson(ok_c, n), "pen": pen, "b": b, "c": c_, "p": binomial_dos_colas(b, b + c_),
+                      "iguales": iguales, "mal": len(mal)})
 
     # Agregado: penalización media de la cohorte, bootstrap sobre los 50 pares (semilla fija).
     modelos = list(penalizaciones)
@@ -129,17 +123,36 @@ def informe(datos: dict[str, dict[str, tuple[str, str | None]]], titulo: str) ->
     medias.sort()
     ic = (medias[int(0.025 * BOOTSTRAP)], medias[int(0.975 * BOOTSTRAP) - 1])
     h2 = wilson(ingenuas, equivocadas)
+    return {"filas": filas, "media": media, "ic": ic, "signos": signos,
+            "p_signos": binomial_dos_colas(signos[0], sum(signos)), "h1": ic[0] > 0,
+            "ingenuas": ingenuas, "equivocadas": equivocadas, "wilson_h2": h2, "h2": h2[0] > 0.5,
+            "estratos": {k: tuple(v) for k, v in sorted(por_estrato.items())}}
+
+
+def informe(datos: dict[str, dict[str, tuple[str, str | None]]], titulo: str) -> str:
+    e = estadisticas(datos)
+    lineas = [f"# Pares prerregistrados — {titulo}", "",
+              "Trampa = la fecha cae donde la diferencia habitual no vale; control = el mismo enunciado fuera de ese "
+              "periodo. Penalización = acierto en controles − acierto en trampas. IC al 95 %.", "",
+              "| modelo | pares | trampas | controles | penalización | b / c | McNemar p | errores = ingenua |",
+              "|---|---|---|---|---|---|---|---|"]
+    for f in e["filas"]:
+        n, wt, wc = f["n"], f["wt"], f["wc"]
+        lineas.append(f"| {f['modelo']} | {n} | {f['ok_t'] / n:.0%} [{wt[0]:.0%}–{wt[1]:.0%}] | {f['ok_c'] / n:.0%} "
+                      f"[{wc[0]:.0%}–{wc[1]:.0%}] | {f['pen']:+.0%} | {f['b']} / {f['c']} | {f['p']:.3g} | "
+                      f"{f['iguales']}/{f['mal']} |")
+    ic, h2, signos = e["ic"], e["wilson_h2"], e["signos"]
     lineas += ["", "## Hipótesis", "",
-               f"- **H1** — penalización media de la cohorte: **{media:+.1%}** (IC bootstrap 95 % {ic[0]:+.1%} a "
+               f"- **H1** — penalización media de la cohorte: **{e['media']:+.1%}** (IC bootstrap 95 % {ic[0]:+.1%} a "
                f"{ic[1]:+.1%}). Modelos con penalización positiva / negativa: {signos[0]} / {signos[1]} "
-               f"(prueba de signos p = {binomial_dos_colas(signos[0], sum(signos)):.3g}). "
-               f"**{'Se sostiene' if ic[0] > 0 else 'No se sostiene'}** (criterio: IC por encima de cero).",
-               f"- **H2** — errores en trampas iguales a la respuesta ingenua: **{ingenuas}/{equivocadas}** "
-               f"({ingenuas / max(equivocadas, 1):.0%}, IC Wilson {h2[0]:.0%}–{h2[1]:.0%}). "
-               f"**{'Se sostiene' if h2[0] > 0.5 else 'No se sostiene'}** (criterio: límite inferior > 50 %). "
+               f"(prueba de signos p = {e['p_signos']:.3g}). "
+               f"**{'Se sostiene' if e['h1'] else 'No se sostiene'}** (criterio: IC por encima de cero).",
+               f"- **H2** — errores en trampas iguales a la respuesta ingenua: **{e['ingenuas']}/{e['equivocadas']}** "
+               f"({e['ingenuas'] / max(e['equivocadas'], 1):.0%}, IC Wilson {h2[0]:.0%}–{h2[1]:.0%}). "
+               f"**{'Se sostiene' if e['h2'] else 'No se sostiene'}** (criterio: límite inferior > 50 %). "
                "Las respuestas sin línea ANSWER no entran en H2 y se cuentan como fallo en H1.",
                "", "## Por estrato (descriptivo)", "", "| estrato | pares | trampas | controles |", "|---|---|---|---|"]
-    for estrato, (t, c, n) in sorted(por_estrato.items()):
+    for estrato, (t, c, n) in e["estratos"].items():
         lineas.append(f"| {estrato} | {n} | {t / n:.0%} | {c / n:.0%} |")
     return "\n".join(lineas) + "\n"
 

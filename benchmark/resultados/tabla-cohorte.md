@@ -1,6 +1,6 @@
-# Deadline Math — cohorte de 37 modelos con las 4 tasks completas
+# Deadline Math — cohorte de 38 modelos con las 4 tasks completas
 
-Generado 2026-10-05 07:50 UTC por `kaggle_resultados.py --informe`. Una ejecución por modelo y condición; acierto = hora local extraída correcta.
+Generado 2026-10-06 14:15 UTC por `kaggle_resultados.py --informe`. Una ejecución por modelo y condición; acierto = hora local extraída correcta.
 
 | modelo | std direct | std reasoned | hard direct | hard reasoned |
 |---|---|---|---|---|
@@ -11,6 +11,7 @@ Generado 2026-10-05 07:50 UTC por `kaggle_resultados.py --informe`. Una ejecuci�
 | anthropic/claude-opus-4-8@default | 19/20 (v12) | 20/20 (v8) | 10/11 (v4) | 10/11 (v4) |
 | anthropic/claude-opus-5@default | 17/20 (v12) | 20/20 (v8) | 10/11 (v4) | 11/11 (v4) |
 | anthropic/claude-sonnet-4-5@20250929 | 15/20 (v12) | 20/20 (v8) | 3/11 (v4) | 9/11 (v4) |
+| anthropic/claude-sonnet-4-6@default | 17/20 (v12) | 20/20 (v8) | 6/11 (v4) | 8/11 (v4) |
 | anthropic/claude-sonnet-5@default | 20/20 (v12) | 20/20 (v8) | 9/11 (v4) | 11/11 (v4) |
 | deepseek-ai/deepseek-r1-0528 | 20/20 (v12) | 20/20 (v8) | 10/11 (v4) | 10/11 (v4) |
 | google/gemini-2.5-flash | 17/20 (v12) | 20/20 (v8) | 8/11 (v4) | 7/11 (v4) |
@@ -44,14 +45,13 @@ Generado 2026-10-05 07:50 UTC por `kaggle_resultados.py --informe`. Una ejecuci�
 
 | condición | aciertos | wrong | no_answer | truncated | una sola línea ANSWER |
 |---|---|---|---|---|---|
-| std direct | 612/740 (82.7%) | 110 | 18 | 0 | 687/740 |
-| std reasoned | 692/740 (93.5%) | 48 | 0 | 0 | no se pide |
-| hard direct | 279/407 (68.6%) | 121 | 7 | 0 | 368/407 |
-| hard reasoned | 313/407 (76.9%) | 93 | 1 | 0 | no se pide |
+| std direct | 629/760 (82.8%) | 113 | 18 | 0 | 699/760 |
+| std reasoned | 712/760 (93.7%) | 48 | 0 | 0 | no se pide |
+| hard direct | 285/418 (68.2%) | 126 | 7 | 0 | 371/418 |
+| hard reasoned | 321/418 (76.8%) | 96 | 1 | 0 | no se pide |
 
-## Fuera de la cohorte (4): no completados, no puntúan como 0 %
+## Fuera de la cohorte (3): no completados, no puntúan como 0 %
 
-- anthropic/claude-sonnet-4-6@default — std reasoned: cuota (403); hard direct: cuota (403); hard reasoned: cuota (403)
-- openai/gpt-oss-120b — std direct: saturado (429); std reasoned: saturado (429); hard direct: saturado (429); hard reasoned: saturado (429)
+- openai/gpt-oss-120b — std direct: saturado (429); std reasoned: saturado (429)
 - xai/grok-4.5-0708 — std direct: modelo no encontrado (404); std reasoned: modelo no encontrado (404); hard direct: modelo no encontrado (404); hard reasoned: modelo no encontrado (404)
 - xai/grok-4.6 — std direct: modelo no encontrado (404); std reasoned: modelo no encontrado (404); hard direct: modelo no encontrado (404); hard reasoned: modelo no encontrado (404)

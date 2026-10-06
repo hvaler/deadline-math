@@ -20,6 +20,7 @@ when Europe and the US change clocks on different dates, or they add clock hours
 | `benchmark/kaggle_resultados.py` | Per-task tables from the downloaded runs, with the accepted task versions fixed. |
 | `benchmark/analisis_pares.py` | The pre-registered analysis (Wilson, exact McNemar, bootstrap, sign test). |
 | `benchmark/cifras_articulo.py` | Every number quoted in the article, computed from the data. |
+| `benchmark/resultados/RESULTS.md` | **Final results in English**: pre-registered pairs, extension, 4-task cohort, repeatability. |
 | `benchmark/resultados/kaggle/` | Raw runs downloaded from Kaggle (`kaggle b t download`), including full trajectories. |
 | `benchmark/resultados/piloto-*.jsonl` | Local pilot runs through the same model proxy. |
 | `docs/PREREGISTRATION.md` | Pre-registration (English translation) with deviations and execution log. |

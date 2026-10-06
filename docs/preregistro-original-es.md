@@ -107,3 +107,13 @@ Generación y piloto local, 04/10. Ejecución en Kaggle, 05–06/10 si hay cuota
   6 % / 100 %, Opus 4.8 78 % / 100 %; GPT-5.5, GPT-5.6 Sol/Terra, GPT-6 Astra, Gemini 3.1 Pro y 3.5 Flash sin
   penalización. Se añaden a la ampliación, con el mismo criterio, los 4 modelos del benchmark público que aún no la
   tenían (Qwen3 Next Instruct, DeepSeek R1, Qwen3 235B, Claude Opus 5).
+- 2026-10-06 ~07:03 UTC — **Último reintento.** Qwen3 Next 80B Thinking completa los pares: **el resultado
+  prerregistrado queda con 19 de 19 modelos.** Recalculado con el mismo análisis:
+  - **H1 se sostiene**: penalización media +29,8 % (IC bootstrap 95 % +25,4 % a +34,2 %); 13 modelos con penalización
+    positiva, 0 negativa (prueba de signos p = 0,00024).
+  - **H2 se sostiene**: 293 de 321 errores en trampas (91 %, IC Wilson 88–94 %) son la respuesta ingenua.
+  - Las cifras de 18 modelos anotadas el 04/10 (+29,6 %; 278/306) quedan sustituidas por estas; no cambia el veredicto.
+  Ampliación (secundaria), ya con 18 modelos (se suman Qwen3 Next Instruct, DeepSeek R1, Qwen3 235B y Claude Opus 5):
+  penalización +25,1 % (IC +21,7 % a +28,3 %), 11 positivos / 2 negativos; 261/274 errores ingenuos (95 %). Claude Opus 5
+  sale con −6 puntos (trampas 96 %, controles 90 %; McNemar p = 0,45, no significativo).
+- **2026-10-06 — Congelación de datos.** No se ejecuta nada más.

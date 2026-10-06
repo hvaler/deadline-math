@@ -1,11 +1,11 @@
-# Cifras del artículo (2026-10-05 09:51)
+# Cifras del artículo (2026-10-06 16:15)
 
-## Cohorte de las 4 tasks: 37 modelos
+## Cohorte de las 4 tasks: 38 modelos
 
-- deadline-math-direct: 612/740 (82.7%); una sola línea ANSWER 687/740
-- deadline-math-reasoned: 692/740 (93.5%); una sola línea ANSWER 13/740
-- deadline-math-hard-direct: 279/407 (68.6%); una sola línea ANSWER 368/407
-- deadline-math-hard-reasoned: 313/407 (76.9%); una sola línea ANSWER 10/407
+- deadline-math-direct: 629/760 (82.8%); una sola línea ANSWER 699/760
+- deadline-math-reasoned: 712/760 (93.7%); una sola línea ANSWER 13/760
+- deadline-math-hard-direct: 285/418 (68.2%); una sola línea ANSWER 371/418
+- deadline-math-hard-reasoned: 321/418 (76.8%); una sola línea ANSWER 10/418
 
 ## Estándar directo: 16 de 38 completados con 20/20
 
@@ -23,14 +23,14 @@ anthropic/claude-sonnet-5@default, deepseek-ai/deepseek-r1-0528, google/gemini-3
 
 ## Tamaño del error en las respuestas equivocadas (cohorte, 4 tasks)
 
-- total: 228/372 (61%) exactamente una hora
+- total: 235/383 (61%) exactamente una hora
 - base: 5/10
 - day-rollover: 5/20
-- described-date: 18/40
-- dst-gap-autumn: 48/49
-- dst-gap-spring: 17/18
-- duration: 54/70
-- machine-format: 23/63
+- described-date: 19/43
+- dst-gap-autumn: 50/51
+- dst-gap-spring: 18/19
+- duration: 56/72
+- machine-format: 24/66
 - offsets: 30/44
 - relative-date: 18/26
 - traveling: 5/15
@@ -38,9 +38,9 @@ anthropic/claude-sonnet-5@default, deepseek-ai/deepseek-r1-0528, google/gemini-3
 
 ## Nivel difícil: respuestas equivocadas repetidas
 
-- deadline-math-hard-direct h-fmt-1 (correcta 2026-10-12 15:59): {'2026-10-11 15:59': 4, '2026-10-23 10:39': 1, '2026-10-12 12:59': 1} de 19
-- deadline-math-hard-direct h-fmt-2 (correcta 2026-10-25 03:30): {'2026-10-25 04:30': 11} de 11
-- deadline-math-hard-reasoned h-fmt-1 (correcta 2026-10-12 15:59): {'2026-10-11 15:59': 6, '2026-06-16 12:59': 1, '2026-10-12 08:59': 1} de 21
+- deadline-math-hard-direct h-fmt-1 (correcta 2026-10-12 15:59): {'2026-10-11 15:59': 5, '2026-10-23 10:39': 1, '2026-10-12 12:59': 1} de 20
+- deadline-math-hard-direct h-fmt-2 (correcta 2026-10-25 03:30): {'2026-10-25 04:30': 12} de 12
+- deadline-math-hard-reasoned h-fmt-1 (correcta 2026-10-12 15:59): {'2026-10-11 15:59': 7, '2026-06-16 12:59': 1, '2026-10-12 08:59': 1} de 22
 - deadline-math-hard-reasoned h-fmt-2 (correcta 2026-10-25 03:30): {'2026-10-25 04:30': 11, '2026-10-25 02:30': 1} de 12
 
 ## Repetibilidad: dos ejecuciones limpias del mismo modelo y task (mismo prompt, temperatura 0)
@@ -48,7 +48,7 @@ anthropic/claude-sonnet-5@default, deepseek-ai/deepseek-r1-0528, google/gemini-3
 - 102 pares de ejecuciones; acierto/fallo igual en 1425/1536 casos (92.8%)
 - diferencia de acierto entre ejecuciones: media 4.1%, máxima 20.0%
 
-## Pares — prerregistrados (18 de 19 completaron)
+## Pares — prerregistrados (19 de 19 completaron)
 
 # Pares prerregistrados — prerregistrados
 
@@ -71,26 +71,27 @@ Trampa = la fecha cae donde la diferencia habitual no vale; control = el mismo e
 | openai/gpt-5.4-nano-2026-03-17 | 50 | 6% [2%–16%] | 58% [44%–71%] | +52% | 29 / 3 | 2.56e-06 | 29/47 |
 | openai/gpt-5.6-luna | 50 | 70% [56%–81%] | 100% [93%–100%] | +30% | 15 / 0 | 6.1e-05 | 14/15 |
 | qwen/qwen3-coder-480b-a35b-instruct | 50 | 0% [0%–7%] | 34% [22%–48%] | +34% | 17 / 0 | 1.53e-05 | 21/22 |
+| qwen/qwen3-next-80b-a3b-thinking | 50 | 64% [50%–76%] | 98% [90%–100%] | +34% | 18 / 1 | 7.63e-05 | 15/15 |
 | xai/grok-4.20-0309-non-reasoning | 50 | 18% [10%–31%] | 96% [87%–99%] | +78% | 40 / 1 | 3.82e-11 | 37/41 |
 | xai/grok-4.20-0309-reasoning | 50 | 84% [71%–92%] | 100% [93%–100%] | +16% | 8 / 0 | 0.00781 | 8/8 |
 | zai/glm-5 | 50 | 100% [93%–100%] | 100% [93%–100%] | +0% | 0 / 0 | 1 | 0/0 |
 
 ## Hipótesis
 
-- **H1** — penalización media de la cohorte: **+29.6%** (IC bootstrap 95 % +25.4% a +33.7%). Modelos con penalización positiva / negativa: 12 / 0 (prueba de signos p = 0.000488). **Se sostiene** (criterio: IC por encima de cero).
-- **H2** — errores en trampas iguales a la respuesta ingenua: **278/306** (91%, IC Wilson 87%–94%). **Se sostiene** (criterio: límite inferior > 50 %). Las respuestas sin línea ANSWER no entran en H2 y se cuentan como fallo en H1.
+- **H1** — penalización media de la cohorte: **+29.8%** (IC bootstrap 95 % +25.4% a +34.2%). Modelos con penalización positiva / negativa: 13 / 0 (prueba de signos p = 0.000244). **Se sostiene** (criterio: IC por encima de cero).
+- **H2** — errores en trampas iguales a la respuesta ingenua: **293/321** (91%, IC Wilson 88%–94%). **Se sostiene** (criterio: límite inferior > 50 %). Las respuestas sin línea ANSWER no entran en H2 y se cuentan como fallo en H1.
 
 ## Por estrato (descriptivo)
 
 | estrato | pares | trampas | controles |
 |---|---|---|---|
-| conversion-autumn | 324 | 69% | 90% |
-| conversion-spring | 216 | 72% | 89% |
-| duration-autumn | 216 | 51% | 97% |
-| duration-spring | 144 | 53% | 97% |
+| conversion-autumn | 342 | 70% | 90% |
+| conversion-spring | 228 | 74% | 89% |
+| duration-autumn | 228 | 50% | 97% |
+| duration-spring | 152 | 51% | 97% |
 
 
-## Pares — ampliación, análisis secundario (14 modelos)
+## Pares — ampliación, análisis secundario (18 modelos)
 
 # Pares prerregistrados — ampliación
 
@@ -102,7 +103,9 @@ Trampa = la fecha cae donde la diferencia habitual no vale; control = el mismo e
 | anthropic/claude-opus-4-6@default | 50 | 46% [33%–60%] | 90% [79%–96%] | +44% | 24 / 2 | 1.05e-05 | 26/27 |
 | anthropic/claude-opus-4-7@default | 50 | 76% [63%–86%] | 90% [79%–96%] | +14% | 12 / 5 | 0.143 | 12/12 |
 | anthropic/claude-opus-4-8@default | 50 | 78% [65%–87%] | 100% [93%–100%] | +22% | 11 / 0 | 0.000977 | 10/11 |
+| anthropic/claude-opus-5@default | 50 | 96% [87%–99%] | 90% [79%–96%] | -6% | 2 / 5 | 0.453 | 0/0 |
 | anthropic/claude-sonnet-4-5@20250929 | 50 | 6% [2%–16%] | 100% [93%–100%] | +94% | 47 / 0 | 1.42e-14 | 47/47 |
+| deepseek-ai/deepseek-r1-0528 | 50 | 98% [90%–100%] | 100% [93%–100%] | +2% | 1 / 0 | 1 | 1/1 |
 | google/gemini-2.5-pro | 50 | 96% [87%–99%] | 100% [93%–100%] | +4% | 2 / 0 | 0.5 | 2/2 |
 | google/gemini-3.1-pro-preview | 50 | 100% [93%–100%] | 100% [93%–100%] | +0% | 0 / 0 | 1 | 0/0 |
 | google/gemini-3.5-flash | 50 | 100% [93%–100%] | 100% [93%–100%] | +0% | 0 / 0 | 1 | 0/0 |
@@ -112,18 +115,20 @@ Trampa = la fecha cae donde la diferencia habitual no vale; control = el mismo e
 | openai/gpt-5.6-terra | 50 | 100% [93%–100%] | 98% [90%–100%] | -2% | 0 / 1 | 1 | 0/0 |
 | openai/gpt-6-astra | 50 | 100% [93%–100%] | 100% [93%–100%] | +0% | 0 / 0 | 1 | 0/0 |
 | openai/gpt-oss-20b | 50 | 54% [40%–67%] | 94% [84%–98%] | +40% | 22 / 2 | 3.59e-05 | 22/23 |
+| qwen/qwen3-235b-a22b-instruct-2507 | 50 | 0% [0%–7%] | 88% [76%–94%] | +88% | 44 / 0 | 1.14e-13 | 47/50 |
+| qwen/qwen3-next-80b-a3b-instruct | 50 | 0% [0%–7%] | 78% [65%–87%] | +78% | 39 / 0 | 3.64e-12 | 44/50 |
 
 ## Hipótesis
 
-- **H1** — penalización media de la cohorte: **+20.7%** (IC bootstrap 95 % +16.6% a +24.7%). Modelos con penalización positiva / negativa: 8 / 1 (prueba de signos p = 0.0391). **Se sostiene** (criterio: IC por encima de cero).
-- **H2** — errores en trampas iguales a la respuesta ingenua: **169/173** (98%, IC Wilson 94%–99%). **Se sostiene** (criterio: límite inferior > 50 %). Las respuestas sin línea ANSWER no entran en H2 y se cuentan como fallo en H1.
+- **H1** — penalización media de la cohorte: **+25.1%** (IC bootstrap 95 % +21.7% a +28.3%). Modelos con penalización positiva / negativa: 11 / 2 (prueba de signos p = 0.0225). **Se sostiene** (criterio: IC por encima de cero).
+- **H2** — errores en trampas iguales a la respuesta ingenua: **261/274** (95%, IC Wilson 92%–97%). **Se sostiene** (criterio: límite inferior > 50 %). Las respuestas sin línea ANSWER no entran en H2 y se cuentan como fallo en H1.
 
 ## Por estrato (descriptivo)
 
 | estrato | pares | trampas | controles |
 |---|---|---|---|
-| conversion-autumn | 252 | 85% | 92% |
-| conversion-spring | 168 | 73% | 96% |
-| duration-autumn | 168 | 67% | 99% |
-| duration-spring | 112 | 71% | 99% |
+| conversion-autumn | 324 | 76% | 91% |
+| conversion-spring | 216 | 68% | 93% |
+| duration-autumn | 216 | 62% | 99% |
+| duration-spring | 144 | 66% | 97% |
 

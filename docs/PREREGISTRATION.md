@@ -108,3 +108,13 @@ Oct 8–10. Publication, Sunday Oct 11.
   78% / 100%; GPT-5.5, GPT-5.6 Sol/Terra, GPT-6 Astra, Gemini 3.1 Pro and 3.5 Flash with no penalty. The 4 models of the
   public benchmark that did not have it yet (Qwen3 Next Instruct, DeepSeek R1, Qwen3 235B, Claude Opus 5) are added to
   the extension, with the same criteria.
+- 2026-10-06 ~07:03 UTC — **Final retry.** Qwen3 Next 80B Thinking completes the pairs: **the pre-registered result
+  now covers 19 of 19 models.** Recomputed with the same analysis:
+  - **H1 holds**: mean penalty +29.8% (95% bootstrap CI +25.4% to +34.2%); 13 models with a positive penalty, 0
+    negative (sign test p = 0.00024).
+  - **H2 holds**: 293 of 321 trap errors (91%, Wilson CI 88–94%) are the naive answer.
+  - The 18-model figures logged on Oct 4 (+29.6%; 278/306) are superseded by these; the verdict does not change.
+  Extension (secondary), now 18 models (adding Qwen3 Next Instruct, DeepSeek R1, Qwen3 235B and Claude Opus 5):
+  penalty +25.1% (CI +21.7% to +28.3%), 11 positive / 2 negative; 261/274 naive errors (95%). Claude Opus 5 comes out
+  at −6 points (traps 96%, controls 90%; McNemar p = 0.45, not significant).
+- **2026-10-06 — Data freeze.** No further runs.
