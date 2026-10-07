@@ -128,3 +128,4 @@ Generación y piloto local, 04/10. Ejecución en Kaggle, 05–06/10 si hay cuota
   - Ampliación (secundaria), ya con 24 modelos: penalización +22,6 % (IC +19,7 % a +25,4 %); 308/321 (96 %). Claude Opus 5.5, Sonnet 5.5, GPT-6 Sol y GPT-6.1 Sol: 100 % en trampas y controles; GPT-6 Luna 86 % / 100 %.
   - Cohorte de las 4 tasks: 43 modelos. Quedan fuera gpt-oss-120b (dos ejecuciones colgadas) y Grok 4.5/4.6 (404).
 - **2026-10-07 — Nueva congelación de datos.** No se ejecuta nada más.
+  - 2026-10-07 01:10 UTC: gpt-oss-120b completa el estándar directo después de la congelación (descarga 01:00); no entra en la cohorte. Visible en el leaderboard.

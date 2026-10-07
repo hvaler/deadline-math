@@ -125,3 +125,4 @@ Oct 8–10. Publication, Sunday Oct 11.
   - Extension (secondary), now 24 models: penalty +22.6% (CI +19.7% to +25.4%); 308/321 (96%). Claude Opus 5.5, Sonnet 5.5, GPT-6 Sol and GPT-6.1 Sol: 100% on traps and controls; GPT-6 Luna 86% / 100%.
   - 4-task cohort: 43 models. Excluded: gpt-oss-120b (two runs hung) and Grok 4.5/4.6 (404).
 - **2026-10-07 — New data freeze.** No further runs.
+  - 2026-10-07 01:10 UTC: gpt-oss-120b finished the standard direct task after the data freeze (download at 01:00); it is not in the cohort, but it is visible on the leaderboard.
