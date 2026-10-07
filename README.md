@@ -6,6 +6,8 @@ for the [DEV Kaggle Benchmarking Challenge](https://dev.to/challenges/kaggle-202
 
 **Public benchmark:** https://www.kaggle.com/benchmarks/hugovalerrojas/deadline-mat
 
+**Write-up (DEV):** https://dev.to/hugo_valer_79d0d94e00804b/the-model-knew-the-rule-it-still-used-last-weeks-offset-584m
+
 **Main finding:** when models fail, they fail by **exactly one hour**: they apply the usual offset during the weeks
 when Europe and the US change clocks on different dates, or they add clock hours across a clock change. A
 [pre-registered](docs/PREREGISTRATION.md) set of 50 trap/control pairs confirms it.
