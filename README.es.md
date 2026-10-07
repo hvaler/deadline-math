@@ -64,7 +64,8 @@ los análisis secundarios: **[benchmark/resultados/RESULTS.md](benchmark/resulta
 ```
 benchmark/
   deadline_math.py        casos, prompts, oráculo y task de Kaggle (fuente única)
-  construir_kaggle.py     genera los seis ficheros autocontenidos de benchmark/kaggle/
+  construir_kaggle.py     genera los seis ficheros autocontenidos de benchmark/kaggle/ (se ejecutaron cinco;
+                          deadline-math-pairs-reasoned era opcional en el prerregistro y no se ejecutó)
   kaggle_resultados.py    tablas por task a partir de las ejecuciones descargadas, con versiones fijadas
   analisis_pares.py       análisis prerregistrado: Wilson, McNemar exacta, bootstrap, prueba de signos
   tablas_en.py            genera RESULTS.md
@@ -76,9 +77,11 @@ benchmark/
     RESULTS.md            resultados finales (en inglés)
     kaggle/               ejecuciones brutas descargadas de Kaggle, con las trayectorias completas
     piloto-*.jsonl        ejecuciones del piloto local
+    tabla-cohorte.md, cifras-articulo.md, pares-*.md, manifiesto.json   tablas de trabajo (en español)
 docs/
   preregistro-original-es.md   prerregistro original (el que manda)
   PREREGISTRATION.md      traducción al inglés, con desviaciones y registro de ejecución
+  ARTICLE.md              copia de archivo del artículo publicado en DEV (en inglés)
   img/                    figuras
 ```
 

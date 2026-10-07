@@ -58,7 +58,8 @@ separate: **[benchmark/resultados/RESULTS.md](benchmark/resultados/RESULTS.md)**
 ```
 benchmark/
   deadline_math.py        cases, prompts, oracle and the Kaggle task (single source of truth)
-  construir_kaggle.py     writes the six self-contained task files in benchmark/kaggle/
+  construir_kaggle.py     writes the six self-contained task files in benchmark/kaggle/ (five were run;
+                          deadline-math-pairs-reasoned was pre-registered as optional and not run)
   kaggle_resultados.py    per-task tables from the downloaded runs, with pinned task versions
   analisis_pares.py       pre-registered analysis: Wilson, exact McNemar, bootstrap, sign test
   tablas_en.py            builds RESULTS.md
@@ -70,8 +71,10 @@ benchmark/
     RESULTS.md            final results (English)
     kaggle/               raw runs downloaded from Kaggle, including full model trajectories
     piloto-*.jsonl        local pilot runs
+    tabla-cohorte.md, cifras-articulo.md, pares-*.md, manifiesto.json   working tables (Spanish)
 docs/
   PREREGISTRATION.md      pre-registration (English translation), deviations and execution log
+  ARTICLE.md              archival copy of the DEV write-up
   preregistro-original-es.md   the authoritative Spanish original
   img/                    figures
 ```
